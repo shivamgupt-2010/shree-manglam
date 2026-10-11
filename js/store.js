@@ -174,7 +174,15 @@ const Store = {
   getSettings() {
     try {
       const data = localStorage.getItem(STORAGE_KEYS.SETTINGS);
-      if (data) return JSON.parse(data);
+      if (data) {
+        const parsed = JSON.parse(data);
+        // Automatically migrate if using initial placeholder
+        if (parsed.whatsappNumber === '919876543210' || (parsed.address && parsed.address.includes('Jaipur'))) {
+          this.saveSettings(BRAND_SETTINGS);
+          return BRAND_SETTINGS;
+        }
+        return parsed;
+      }
     } catch (e) {
       console.warn('Error reading settings', e);
     }

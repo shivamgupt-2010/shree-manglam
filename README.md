@@ -59,13 +59,14 @@ To connect the website to **Google Search Console**:
 ## 📍 Google Maps Placement & Customization
 
 The flagship boutique location is displayed in the **Boutique & Location** section of `index.html`:
-- **Current Location**: Heritage Fashion Boulevard, M.I. Road, Jaipur, Rajasthan 302001.
+- **Boutique Location**: HARE MADHAV COLONY, Burhar, Madhya Pradesh 484110
+- **Google Maps Link**: [https://share.google/79DGLSpGCiGERUCj9](https://share.google/79DGLSpGCiGERUCj9)
+- **WhatsApp Concierge**: +91 92855 14821
+- **Opening Hours**: Open Daily · Closes 10 PM
 - **To update the Google Maps embed**:
-  1. Open [Google Maps](https://maps.google.com) and search for your boutique address.
-  2. Click **Share** → **Embed a map**.
-  3. Copy the `src` attribute from the iframe.
-  4. In `index.html`, locate `<iframe class="map-iframe"` and replace the `src="..."` attribute.
-  5. In `js/data.js`, update `BRAND_SETTINGS.address`, `googleMapsEmbedUrl`, and `googleMapsDirectionsUrl`.
+  1. Open the Google Maps link or search for the boutique.
+  2. The responsive Google Maps iframe is embedded in `index.html` pointing to Hare Madhav Colony, Burhar MP.
+  3. Settings are also managed centrally in `js/data.js` via `BRAND_SETTINGS`.
 
 ---
 

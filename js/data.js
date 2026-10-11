@@ -193,15 +193,15 @@ const INITIAL_GALLERY = [
 const BRAND_SETTINGS = {
   brandName: 'Shree Manglam',
   tagline: 'Tradition Meets Elegance',
-  whatsappNumber: '919876543210', // Default concierge number
+  whatsappNumber: '919285514821', // Shree Manglam WhatsApp Concierge
   contactEmail: 'contact@shreemanglam.com',
-  phoneDisplay: '+91 98765 43210',
+  phoneDisplay: '+91 92855 14821',
   instagramHandle: '@shreemanglam_couture',
   instagramUrl: 'https://instagram.com/',
-  address: 'Shree Manglam Couture, Heritage Fashion Boulevard, M.I. Road, Jaipur, Rajasthan 302001',
-  googleMapsEmbedUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d113887.8188172834!2d75.7198759368553!3d26.91243364414601!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x396db477161b40bf%3A0x64fc1e6e5898ef42!2sJaipur%2C%20Rajasthan!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin',
-  googleMapsDirectionsUrl: 'https://maps.google.com/?q=Jaipur+Rajasthan',
-  boutiqueHours: 'Mon – Sat: 11:00 AM – 8:30 PM | Sun: By Private Appointment',
+  address: 'HARE MADHAV COLONY, Burhar, Madhya Pradesh 484110',
+  googleMapsEmbedUrl: 'https://maps.google.com/maps?q=Shree+Manglam,+Hare+Madhav+Colony,+Burhar,+Madhya+Pradesh+484110&t=&z=16&ie=UTF8&iwloc=&output=embed',
+  googleMapsDirectionsUrl: 'https://share.google/79DGLSpGCiGERUCj9',
+  boutiqueHours: 'Open Daily: 10:00 AM – 10:00 PM (Closes 10 PM)',
   developerCredit: {
     name: 'SHIV',
     text: 'Crafted with elegance by SHIV',
