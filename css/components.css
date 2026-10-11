@@ -1650,4 +1650,512 @@
     text-align: center;
     gap: 14px;
   }
+  .festive-banner-box {
+    padding: 22px 18px;
+  }
+  .festive-banner-content {
+    grid-template-columns: 1fr;
+    text-align: center;
+    gap: 16px;
+  }
+  .festive-emblem-badge {
+    margin: 0 auto;
+    width: 64px;
+    height: 64px;
+    font-size: 2rem;
+  }
+  .festive-title {
+    font-size: 1.45rem;
+  }
+  .festive-tagline {
+    font-size: 0.88rem;
+  }
+  .festive-styling-tip {
+    margin: 6px auto 0;
+  }
+  .festive-cta-block {
+    align-items: center;
+    width: 100%;
+  }
+  .festive-explore-btn {
+    width: 100%;
+    justify-content: center;
+  }
+  .dev-showcase-content {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .dev-actions-grid {
+    width: 100%;
+  }
+  .dev-action-btn {
+    flex: 1;
+    justify-content: center;
+  }
 }
+
+/* --------------------------------------------------------------------------
+   14. Festive & Seasonal Theme Portal
+   -------------------------------------------------------------------------- */
+.festive-portal-section {
+  padding: 36px 0 24px;
+  background: linear-gradient(180deg, rgba(250, 247, 242, 0.6) 0%, var(--color-ivory-warm) 100%);
+  position: relative;
+  z-index: 10;
+  border-bottom: 1px solid rgba(197, 160, 89, 0.2);
+}
+
+.festive-banner-box {
+  background: radial-gradient(circle at 10% 20%, rgba(138, 19, 41, 0.08) 0%, transparent 60%),
+              linear-gradient(135deg, #ffffff 0%, #faf5ed 100%);
+  border: 1.5px solid var(--color-gold);
+  border-radius: var(--radius-md);
+  padding: 32px 36px;
+  box-shadow: 0 12px 36px rgba(138, 19, 41, 0.08), 0 2px 10px rgba(197, 160, 89, 0.15);
+  position: relative;
+  overflow: hidden;
+  transition: all var(--transition-smooth);
+}
+
+.festive-banner-box::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--color-crimson), var(--color-gold), var(--color-crimson));
+}
+
+.festive-banner-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 20px;
+  padding-bottom: 14px;
+  border-bottom: 1px dashed rgba(197, 160, 89, 0.4);
+}
+
+.festive-live-indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(138, 19, 41, 0.09);
+  border: 1px solid rgba(138, 19, 41, 0.25);
+  padding: 5px 14px;
+  border-radius: var(--radius-full);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-crimson);
+}
+
+.pulsing-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--color-crimson);
+  box-shadow: 0 0 0 0 rgba(138, 19, 41, 0.6);
+  animation: pulseGold 2s infinite;
+}
+
+@keyframes pulseGold {
+  0% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(138, 19, 41, 0.7);
+  }
+  70% {
+    transform: scale(1);
+    box-shadow: 0 0 0 8px rgba(138, 19, 41, 0);
+  }
+  100% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(138, 19, 41, 0);
+  }
+}
+
+.festive-timeline-tag {
+  font-size: 0.8rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--color-gold-dark);
+}
+
+.festive-banner-content {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 28px;
+  margin-bottom: 24px;
+}
+
+.festive-emblem-badge {
+  width: 76px;
+  height: 76px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #fff3dc 0%, #fae6bc 100%);
+  border: 2px solid var(--color-gold);
+  box-shadow: 0 6px 18px rgba(197, 160, 89, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.4rem;
+  flex-shrink: 0;
+  transition: transform var(--transition-fast);
+}
+
+.festive-banner-box:hover .festive-emblem-badge {
+  transform: rotate(6deg) scale(1.05);
+}
+
+.festive-text-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.festive-kicker {
+  font-size: 0.72rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-gold-dark);
+  font-weight: 600;
+}
+
+.festive-title {
+  font-family: var(--font-serif-royal);
+  font-size: 1.85rem;
+  color: var(--color-crimson);
+  line-height: 1.15;
+  margin: 0;
+}
+
+.festive-tagline {
+  font-size: 0.94rem;
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+  margin: 0;
+  max-width: 680px;
+}
+
+.festive-styling-tip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.82rem;
+  color: #5a4b3f;
+  background: rgba(197, 160, 89, 0.14);
+  padding: 6px 14px;
+  border-radius: var(--radius-xs);
+  margin-top: 6px;
+  width: fit-content;
+}
+
+.festive-styling-tip span {
+  font-weight: 700;
+  color: var(--color-crimson);
+}
+
+.festive-cta-block {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: flex-end;
+}
+
+.festive-explore-btn {
+  white-space: nowrap;
+  padding: 13px 26px;
+}
+
+.festive-timeline-bar {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding-top: 18px;
+  border-top: 1px solid rgba(197, 160, 89, 0.25);
+  overflow: hidden;
+}
+
+.festive-timeline-label {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  white-space: nowrap;
+}
+
+.festive-pills-scroll {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  scrollbar-width: thin;
+  padding-bottom: 4px;
+  -webkit-overflow-scrolling: touch;
+}
+
+.festive-pill-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: var(--radius-full);
+  background: #ffffff;
+  border: 1px solid rgba(197, 160, 89, 0.35);
+  color: var(--color-text-primary);
+  font-size: 0.76rem;
+  font-weight: 500;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.festive-pill-btn:hover {
+  background: var(--color-ivory-warm);
+  border-color: var(--color-gold);
+  color: var(--color-crimson);
+  transform: translateY(-1px);
+}
+
+.festive-pill-btn.active {
+  background: var(--color-crimson);
+  color: #ffffff;
+  border-color: var(--color-crimson);
+  box-shadow: 0 3px 10px rgba(138, 19, 41, 0.25);
+  font-weight: 600;
+}
+
+.festive-pill-btn.current-indicator::after {
+  content: '• Live';
+  font-size: 0.65rem;
+  color: var(--color-gold-light);
+  margin-left: 2px;
+  font-weight: 700;
+}
+
+/* Festive Product Badge in Catalogue */
+.festive-product-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: linear-gradient(135deg, rgba(138, 19, 41, 0.95) 0%, rgba(90, 14, 28, 0.95) 100%);
+  color: #fff;
+  border: 1px solid rgba(197, 160, 89, 0.6);
+  border-radius: var(--radius-xs);
+  padding: 4px 10px;
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-weight: 600;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  z-index: 5;
+}
+
+/* Festive Filter Pill in Catalogue */
+.filter-pill.festive-filter-pill {
+  background: rgba(138, 19, 41, 0.08);
+  border-color: rgba(138, 19, 41, 0.3);
+  color: var(--color-crimson);
+  font-weight: 600;
+}
+
+.filter-pill.festive-filter-pill.active {
+  background: var(--color-crimson);
+  color: #fff;
+  border-color: var(--color-crimson);
+}
+
+/* --------------------------------------------------------------------------
+   15. Developer Architecture Showcase Card (Shivam Gupta • SHIV)
+   -------------------------------------------------------------------------- */
+.developer-showcase-card {
+  margin-top: 36px;
+  margin-bottom: 24px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.06) 0%, rgba(197, 160, 89, 0.08) 100%);
+  border: 1px solid rgba(197, 160, 89, 0.4);
+  border-radius: var(--radius-sm);
+  padding: 24px 28px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+}
+
+.dev-showcase-badge {
+  display: inline-block;
+  font-size: 0.68rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-gold-light);
+  font-weight: 600;
+  margin-bottom: 16px;
+  border-bottom: 1px solid rgba(197, 160, 89, 0.3);
+  padding-bottom: 4px;
+}
+
+.dev-showcase-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.dev-meta-block {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.dev-avatar {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--color-gold) 0%, var(--color-crimson) 100%);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-serif-royal);
+  font-size: 1.25rem;
+  font-weight: 700;
+  border: 2px solid var(--color-gold-light);
+  box-shadow: 0 4px 12px rgba(197, 160, 89, 0.3);
+  flex-shrink: 0;
+}
+
+.dev-info-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.dev-name {
+  font-family: var(--font-serif-royal);
+  font-size: 1.25rem;
+  color: #ffffff;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+}
+
+.dev-company {
+  font-size: 0.8rem;
+  color: rgba(250, 247, 242, 0.85);
+  margin-top: 2px;
+}
+
+.dev-company-highlight {
+  color: var(--color-gold-light);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+}
+
+.dev-role-desc {
+  font-size: 0.72rem;
+  color: rgba(250, 247, 242, 0.6);
+  margin-top: 4px;
+}
+
+.dev-actions-grid {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.dev-action-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 18px;
+  border-radius: var(--radius-xs);
+  font-size: 0.76rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all var(--transition-fast);
+}
+
+.dev-call-btn {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(197, 160, 89, 0.45);
+  color: var(--color-gold-light);
+}
+
+.dev-call-btn:hover {
+  background: var(--color-gold);
+  color: #181514;
+  border-color: var(--color-gold);
+}
+
+.dev-wa-btn {
+  background: #25d366;
+  border: 1px solid #25d366;
+  color: #ffffff;
+}
+
+.dev-wa-btn:hover {
+  background: #1eb954;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3);
+}
+
+.dev-insta-btn {
+  background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+  border: none;
+  color: #ffffff;
+}
+
+.dev-insta-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(220, 39, 67, 0.35);
+}
+
+/* Mobile Drawer Developer Card */
+.mobile-dev-card {
+  margin-top: 14px;
+  padding: 14px;
+  background: var(--color-ivory-warm);
+  border: 1px solid rgba(197, 160, 89, 0.3);
+  border-radius: var(--radius-xs);
+  text-align: left;
+}
+
+.mobile-dev-title {
+  font-size: 0.68rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-gold-dark);
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.mobile-dev-name {
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--color-crimson);
+}
+
+.mobile-dev-links {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.mobile-dev-btn {
+  flex: 1;
+  text-align: center;
+  padding: 6px 10px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  border-radius: var(--radius-xs);
+  text-decoration: none;
+}
+

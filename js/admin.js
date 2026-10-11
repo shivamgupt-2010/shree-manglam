@@ -20,6 +20,7 @@ const AdminApp = {
     this.renderMetrics();
     this.renderProductsTable();
     this.renderGalleryTable();
+    this.renderFestivalEngineInfo();
     this.bindFormEvents();
     this.bindBackupEvents();
     this.bindShivDbEvents();
@@ -609,5 +610,46 @@ const AdminApp = {
       };
       reader.readAsDataURL(file);
     });
+  },
+
+  // 9. Festival Engine Overview & Live Theme Status
+  renderFestivalEngineInfo() {
+    if (typeof FestivalEngine === 'undefined') return;
+
+    const activeFest = FestivalEngine.getActiveFestival();
+    const festivals = FestivalEngine.getAllFestivals();
+
+    const iconEl = document.getElementById('adminFestIcon');
+    const nameEl = document.getElementById('adminFestName');
+    const datesEl = document.getElementById('adminFestDates');
+    const taglineEl = document.getElementById('adminFestTagline');
+    const stylingEl = document.getElementById('adminFestStyling');
+    const listEl = document.getElementById('adminFestivalList');
+
+    if (iconEl) iconEl.textContent = activeFest.icon;
+    if (nameEl) nameEl.textContent = activeFest.name;
+    if (datesEl) {
+      const startFmt = new Date(activeFest.startDate).toLocaleDateString('en-US', { month: 'short', day: '2-digit' });
+      const endFmt = new Date(activeFest.endDate).toLocaleDateString('en-US', { month: 'short', day: '2-digit', year: 'numeric' });
+      datesEl.textContent = `Active Window: ${startFmt} – ${endFmt}`;
+    }
+    if (taglineEl) taglineEl.textContent = activeFest.tagline;
+    if (stylingEl) stylingEl.textContent = activeFest.stylingNote;
+
+    if (listEl) {
+      listEl.innerHTML = festivals.map(f => {
+        const isCurrent = f.id === activeFest.id;
+        const startYear = f.startDate.slice(0, 4);
+        return `
+          <div style="background: ${isCurrent ? '#fff3dc' : '#ffffff'}; border: 1px solid ${isCurrent ? 'var(--color-gold)' : 'rgba(197,160,89,0.3)'}; border-radius: var(--radius-xs); padding: 8px 12px; font-size: 0.74rem; display: flex; align-items: center; gap: 6px;">
+            <span>${f.icon}</span>
+            <strong>${f.shortName}</strong>
+            <span style="color: var(--color-text-muted);">(${startYear})</span>
+            ${isCurrent ? '<span style="color: var(--color-crimson); font-weight: 700;">• Live</span>' : ''}
+          </div>
+        `;
+      }).join('');
+    }
   }
 };
+

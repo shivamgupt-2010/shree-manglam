@@ -14,12 +14,14 @@ const App = {
   activeOccasion: 'All',
   activeSort: 'featured',
   searchQuery: '',
+  selectedFestivalId: null,
   currentModalProduct: null,
   activeModalImageIndex: 0,
 
   init() {
     this.bindHeader();
     this.renderCategoryCounts();
+    this.initFestivalPortal();
     this.renderCatalogue();
     this.renderLookbook();
     this.bindFilters();
@@ -87,6 +89,98 @@ const App = {
     if (suitsBadge) suitsBadge.textContent = `${suitsCount} Handcrafted Sets`;
   },
 
+  // 2b. Festive Portal & Seasonal Calendar Engine
+  initFestivalPortal() {
+    if (typeof FestivalEngine === 'undefined') return;
+
+    const activeFest = FestivalEngine.getActiveFestival();
+    this.selectedFestivalId = activeFest.id;
+
+    // Update announcement bar with active festival greeting
+    const announcement = document.querySelector('.announcement-bar');
+    if (announcement) {
+      announcement.innerHTML = `<span>${activeFest.greeting} • <a href="#festivePortal" class="gold-accent" style="text-decoration: underline; font-weight: 600;">Explore Festive Curation</a> • Direct WhatsApp Concierge</span>`;
+    }
+
+    this.renderFestivalBanner(activeFest);
+    this.renderFestivalPills(activeFest.id);
+
+    // Bind Explore Festive Curation CTA button
+    const exploreBtn = document.getElementById('festiveExploreBtn');
+    if (exploreBtn) {
+      exploreBtn.addEventListener('click', () => {
+        this.setCategory('Festive');
+        const catSection = document.getElementById('catalogue');
+        catSection?.scrollIntoView({ behavior: 'smooth' });
+      });
+    }
+  },
+
+  renderFestivalBanner(fest) {
+    if (!fest) return;
+    const titleEl = document.getElementById('festiveTitle');
+    const taglineEl = document.getElementById('festiveTagline');
+    const iconEl = document.getElementById('festiveIconBadge');
+    const datesEl = document.getElementById('festiveDatesRange');
+    const stylingTextEl = document.getElementById('festiveStylingText');
+    const statusTextEl = document.getElementById('festiveStatusText');
+    const festPill = document.getElementById('festiveCataloguePill');
+
+    const statusObj = FestivalEngine.getStatusLabel(fest);
+
+    if (titleEl) titleEl.textContent = fest.name;
+    if (taglineEl) taglineEl.textContent = fest.tagline;
+    if (iconEl) iconEl.textContent = fest.icon;
+    if (datesEl) {
+      const startFmt = new Date(fest.startDate).toLocaleDateString('en-US', { month: 'short', day: '2-digit' });
+      const endFmt = new Date(fest.endDate).toLocaleDateString('en-US', { month: 'short', day: '2-digit', year: 'numeric' });
+      datesEl.textContent = `${startFmt} – ${endFmt}`;
+    }
+    if (stylingTextEl) stylingTextEl.textContent = fest.stylingNote;
+    if (statusTextEl) statusTextEl.textContent = statusObj.text;
+    if (festPill) festPill.textContent = `${fest.icon} ${fest.shortName} Spotlight`;
+  },
+
+  renderFestivalPills(activeId) {
+    const scrollContainer = document.getElementById('festivePillsScroll');
+    if (!scrollContainer) return;
+
+    const festivals = FestivalEngine.getAllFestivals();
+    const realActive = FestivalEngine.getActiveFestival();
+
+    scrollContainer.innerHTML = festivals.map(f => {
+      const isSelected = f.id === activeId;
+      const isLiveNow = f.id === realActive.id;
+      const liveClass = isLiveNow ? 'current-indicator' : '';
+      const activeClass = isSelected ? 'active' : '';
+
+      return `
+        <button class="festive-pill-btn ${activeClass} ${liveClass}" data-fest-id="${f.id}" title="${f.name}">
+          <span>${f.icon}</span>
+          <span>${f.shortName}</span>
+        </button>
+      `;
+    }).join('');
+
+    // Bind clicks on festival timeline pills
+    scrollContainer.querySelectorAll('.festive-pill-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const id = btn.dataset.festId;
+        const fest = FestivalEngine.getFestivalById(id);
+        this.selectedFestivalId = id;
+        this.renderFestivalBanner(fest);
+
+        scrollContainer.querySelectorAll('.festive-pill-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        // Automatically switch catalogue to this festival's curated collection
+        this.setCategory('Festive');
+        const catSection = document.getElementById('catalogue');
+        catSection?.scrollIntoView({ behavior: 'smooth' });
+      });
+    });
+  },
+
   // 3. Catalogue Rendering & Filtering
   renderCatalogue() {
     const container = document.getElementById('productGridContainer');
@@ -94,9 +188,21 @@ const App = {
     if (!container) return;
 
     let products = Store.getProducts().filter(p => p.status === 'published');
+    const currentFest = (typeof FestivalEngine !== 'undefined') ? FestivalEngine.getFestivalById(this.selectedFestivalId) : null;
 
-    // Filter by Category
-    if (this.activeCategory !== 'All') {
+    // Filter by Category or Festive Curation
+    if (this.activeCategory === 'Festive') {
+      if (currentFest) {
+        products = FestivalEngine.getSuggestedProducts(currentFest, products);
+        // Retain matching festival items
+        products = products.filter(p =>
+          currentFest.suggestedCategories.includes(p.category) ||
+          (p.occasion && currentFest.recommendedOccasions.some(occ => p.occasion.toLowerCase().includes(occ.toLowerCase()))) ||
+          (p.fabric && currentFest.recommendedFabrics.some(fab => p.fabric.toLowerCase().includes(fab.toLowerCase()))) ||
+          (currentFest.keywords && currentFest.keywords.some(kw => (p.name + ' ' + p.description).toLowerCase().includes(kw)))
+        );
+      }
+    } else if (this.activeCategory !== 'All') {
       products = products.filter(p => p.category === this.activeCategory);
     }
 
@@ -122,21 +228,25 @@ const App = {
       );
     }
 
-    // Sort Products
+    // Sort Products (only if not already sorted by festive relevance, or respect explicit sort)
     if (this.activeSort === 'price-low') {
       products.sort((a, b) => a.pricePaise - b.pricePaise);
     } else if (this.activeSort === 'price-high') {
       products.sort((a, b) => b.pricePaise - a.pricePaise);
     } else if (this.activeSort === 'newest') {
       products.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-    } else {
+    } else if (this.activeCategory !== 'Festive') {
       // Featured first
       products.sort((a, b) => (b.featured ? 1 : 0) - (a.featured ? 1 : 0));
     }
 
     // Update count display
     if (countDisplay) {
-      countDisplay.textContent = `Showing ${products.length} exclusive ${products.length === 1 ? 'creation' : 'creations'}`;
+      if (this.activeCategory === 'Festive') {
+        countDisplay.textContent = `Showing ${products.length} festive ${products.length === 1 ? 'curation' : 'curations'} for ${currentFest ? currentFest.shortName : 'Celebrations'}`;
+      } else {
+        countDisplay.textContent = `Showing ${products.length} exclusive ${products.length === 1 ? 'creation' : 'creations'}`;
+      }
     }
 
     if (products.length === 0) {
@@ -196,10 +306,25 @@ const App = {
       badgeHtml = `<span class="product-card-badge badge-available">In Boutique</span>`;
     }
 
+    // Dynamic Festive Badge according to active/selected festival
+    let festiveBadgeHtml = '';
+    const currentFest = (typeof FestivalEngine !== 'undefined') ? FestivalEngine.getFestivalById(this.selectedFestivalId) : null;
+    if (currentFest) {
+      const matchesCategory = currentFest.suggestedCategories.includes(p.category);
+      const matchesOccasion = p.occasion && currentFest.recommendedOccasions.some(occ => p.occasion.toLowerCase().includes(occ.toLowerCase()));
+      const matchesFabric = p.fabric && currentFest.recommendedFabrics.some(fab => p.fabric.toLowerCase().includes(fab.toLowerCase()));
+      const matchesKeyword = currentFest.keywords && currentFest.keywords.some(kw => (p.name + ' ' + p.description).toLowerCase().includes(kw));
+
+      if (matchesCategory && (matchesOccasion || matchesFabric || matchesKeyword || this.activeCategory === 'Festive')) {
+        festiveBadgeHtml = `<span class="festive-product-badge">${currentFest.icon} ${currentFest.badgeText}</span>`;
+      }
+    }
+
     return `
       <article class="product-card" data-id="${p.id}" id="card-${p.slug}">
         <div class="product-card-media product-media-click">
           ${badgeHtml}
+          ${festiveBadgeHtml}
           <img src="${coverImage}" alt="${p.name}" class="product-card-img" loading="lazy" />
           <button class="product-quick-view-btn quick-view-trigger" aria-label="Quick inspect ${p.name}">
             <span>Inspect Details</span>
