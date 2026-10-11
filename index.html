@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Shree Manglam — Tradition Meets Elegance | Luxury Sarees, Poshak & Suits</title>
+
+  <!-- SEO & Meta Tags -->
+  <meta name="description" content="Discover Shree Manglam — an exquisite Indian luxury fashion house offering authentic Banarasi sarees, royal Rajasthani poshak, and bespoke handcrafted suits." />
+  <meta name="keywords" content="Shree Manglam, luxury sarees, Rajputi poshak, Indian bridal couture, pure silk sarees, hand-embroidered suits, Jaipur couture, tradition meets elegance" />
+  <meta name="author" content="SHIV for Shree Manglam" />
+  <link rel="canonical" href="https://shreemanglam.com/" />
+
+  <!-- Google Search Console Verification Meta Tag Placeholder -->
+  <!-- REPLACE 'YOUR_GOOGLE_CONSOLE_VERIFICATION_CODE_HERE' with your token from Google Search Console -->
+  <meta name="google-site-verification" content="YOUR_GOOGLE_CONSOLE_VERIFICATION_CODE_HERE" />
+
+  <!-- OpenGraph / Social Meta -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://shreemanglam.com/" />
+  <meta property="og:title" content="Shree Manglam — Tradition Meets Elegance" />
+  <meta property="og:description" content="Exclusive royal Indian couture: Handcrafted Banarasi Sarees, Rajputi Poshak, and Designer Suits." />
+  <meta property="og:image" content="assets/logo-badge.jpg" />
+
+  <!-- Twitter Meta -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Shree Manglam — Tradition Meets Elegance" />
+  <meta name="twitter:description" content="Handcrafted Indian royal fashion — Sarees, Poshak & Suits." />
+  <meta name="twitter:image" content="assets/hero-banner.jpg" />
+
+  <!-- Favicon / Brand Icon -->
+  <link rel="icon" type="image/jpeg" href="assets/logo.jpg" />
+  <link rel="apple-touch-icon" href="assets/logo.jpg" />
+
+  <!-- Google Fonts: Cormorant Garamond, Cinzel, Montserrat -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/variables.css" />
+  <link rel="stylesheet" href="css/main.css" />
+  <link rel="stylesheet" href="css/components.css" />
+
+  <!-- Structured Data / JSON-LD for Google Search Console & Rich Snippets -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ClothingStore",
+    "name": "Shree Manglam",
+    "image": "assets/logo-badge.jpg",
+    "description": "Luxury Indian couture house specializing in royal Banarasi sarees, authentic Rajputi poshak, and handcrafted festive suits.",
+    "telephone": "+91-9876543210",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Heritage Fashion Boulevard, M.I. Road",
+      "addressLocality": "Jaipur",
+      "addressRegion": "Rajasthan",
+      "postalCode": "302001",
+      "addressCountry": "IN"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": 26.9124,
+      "longitude": 75.7873
+    },
+    "openingHoursSpecification": [
+      {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+        "opens": "11:00",
+        "closes": "20:30"
+      }
+    ],
+    "priceRange": "₹₹₹₹",
+    "currenciesAccepted": "INR"
+  }
+  </script>
+</head>
+<body>
+
+  <!-- Top Announcement Bar -->
+  <div class="announcement-bar">
+    <span>⚜️ Bespoke Bridal & Festive Appointments Available Worldwide • <span class="gold-accent">Direct WhatsApp Concierge</span></span>
+  </div>
+
+  <!-- Luxury Sticky Header -->
+  <header class="site-header" id="siteHeader">
+    <div class="header-inner container">
+      <a href="/" class="brand-emblem-wrapper" aria-label="Shree Manglam Home">
+        <img src="assets/logo.jpg" alt="Shree Manglam Emblem" class="brand-logo-img" />
+        <div class="brand-text-block">
+          <span class="brand-title">Shree Manglam</span>
+          <span class="brand-tagline">Tradition Meets Elegance</span>
+        </div>
+      </a>
+
+      <!-- Desktop Nav -->
+      <nav class="nav-links" aria-label="Main Navigation">
+        <a href="#collections" class="nav-link">Collections</a>
+        <a href="#catalogue" class="nav-link" onclick="App.setCategory('Sarees')">Sarees</a>
+        <a href="#catalogue" class="nav-link" onclick="App.setCategory('Poshak')">Poshak</a>
+        <a href="#catalogue" class="nav-link" onclick="App.setCategory('Suits')">Suits</a>
+        <a href="#lookbook" class="nav-link">Lookbook</a>
+        <a href="#heritage" class="nav-link">Craftsmanship</a>
+        <a href="#location" class="nav-link">Boutique & Maps</a>
+      </nav>
+
+      <!-- Header Actions -->
+      <div class="header-actions">
+        <a href="admin.html" class="header-admin-link" title="Admin Content Management">Admin Panel</a>
+        <a href="https://wa.me/919876543210?text=Namaste%20Shree%20Manglam%2C%20I%20would%20like%20to%20enquire%20about%20your%20couture%20collection." target="_blank" rel="noopener noreferrer" class="header-wa-btn">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+          </svg>
+          <span>Enquire</span>
+        </a>
+        <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Open Mobile Menu">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Drawer Menu -->
+  <div id="mobileDrawer" style="position: fixed; inset: 0; background: rgba(28,24,23,0.8); z-index: 2500; display: none; align-items: flex-start; justify-content: flex-end;">
+    <div style="background: var(--color-surface-white); width: 85%; max-width: 320px; height: 100%; padding: 32px 24px; display: flex; flex-direction: column; gap: 20px; box-shadow: -8px 0 24px rgba(0,0,0,0.3);">
+      <div style="display: flex; align-items: center; justify-content: space-between; padding-bottom: 16px; border-bottom: 1px solid rgba(197,160,89,0.3);">
+        <span style="font-family: var(--font-serif-royal); font-size: 1.15rem; color: var(--color-crimson);">Menu</span>
+        <button id="mobileDrawerClose" style="font-size: 1.5rem; color: var(--color-crimson);">✕</button>
+      </div>
+      <a href="#collections" class="mobile-nav-link" style="font-size: 1rem; color: var(--color-text-primary); text-transform: uppercase; letter-spacing: 0.1em;">Curated Collections</a>
+      <a href="#catalogue" class="mobile-nav-link" onclick="App.setCategory('Sarees')" style="font-size: 1rem; color: var(--color-text-primary); text-transform: uppercase; letter-spacing: 0.1em;">Royal Sarees</a>
+      <a href="#catalogue" class="mobile-nav-link" onclick="App.setCategory('Poshak')" style="font-size: 1rem; color: var(--color-text-primary); text-transform: uppercase; letter-spacing: 0.1em;">Rajputi Poshak</a>
+      <a href="#catalogue" class="mobile-nav-link" onclick="App.setCategory('Suits')" style="font-size: 1rem; color: var(--color-text-primary); text-transform: uppercase; letter-spacing: 0.1em;">Couture Suits</a>
+      <a href="#lookbook" class="mobile-nav-link" style="font-size: 1rem; color: var(--color-text-primary); text-transform: uppercase; letter-spacing: 0.1em;">Lookbook & Reels</a>
+      <a href="#heritage" class="mobile-nav-link" style="font-size: 1rem; color: var(--color-text-primary); text-transform: uppercase; letter-spacing: 0.1em;">Royal Craftsmanship</a>
+      <a href="#location" class="mobile-nav-link" style="font-size: 1rem; color: var(--color-text-primary); text-transform: uppercase; letter-spacing: 0.1em;">Boutique & Maps</a>
+      <a href="admin.html" class="mobile-nav-link" style="font-size: 1rem; color: var(--color-gold-dark); text-transform: uppercase; letter-spacing: 0.1em; font-weight: 600;">Admin Dashboard</a>
+      <div style="margin-top: auto; padding-top: 20px; border-top: 1px solid rgba(197,160,89,0.3); text-align: center;">
+        <a href="https://wa.me/919876543210" target="_blank" class="btn-luxury-primary" style="width: 100%; justify-content: center;">WhatsApp Concierge</a>
+      </div>
+    </div>
+  </div>
+
+  <main>
+    <!-- Editorial Hero Section -->
+    <section class="hero-section" id="hero">
+      <div class="hero-bg-wrapper">
+        <img src="assets/hero-banner.jpg" alt="Shree Manglam Indian Royal Haute Couture" class="hero-bg-image" />
+      </div>
+      <div class="hero-overlay"></div>
+      <div class="hero-content">
+        <div class="hero-badge-tag">
+          <span>⚜️ Phase 1 Couture Edition</span>
+        </div>
+        <h1 class="hero-title">
+          Tradition Meets Elegance
+          <span>Royal Indian Haute Couture</span>
+        </h1>
+        <p class="hero-subtitle">
+          Immortalizing royal Rajasthani heritage, Banarasi silk heirlooms, and bespoke artisanal embroidery for the discerning modern woman.
+        </p>
+        <div class="hero-cta-group">
+          <a href="#catalogue" class="btn-luxury-primary">
+            <span>Explore Collections</span>
+            <span>→</span>
+          </a>
+          <a href="https://wa.me/919876543210?text=Namaste%20Shree%20Manglam%2C%20I%20would%20like%20to%20book%20a%20bridal%20consultation." target="_blank" rel="noopener noreferrer" class="btn-luxury-outline">
+            <span>WhatsApp Consultation</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Shop By Category Section -->
+    <section class="section-padding" id="collections">
+      <div class="container">
+        <div class="section-header">
+          <span class="subheading-gold">Bespoke Portals</span>
+          <h2 class="heading-section">Curated Royal Categories</h2>
+          <div class="royal-divider">
+            <span class="line"></span>
+            <span class="lotus-icon">🪷</span>
+            <span class="line"></span>
+          </div>
+          <p class="section-desc">
+            Explore our three signature pillars of timeless Indian grace — meticulously woven, hand-embellished with pure zardozi, and tailored for imperial celebrations.
+          </p>
+        </div>
+
+        <div class="category-grid">
+          <!-- Saree Card -->
+          <div class="category-card" data-category="Sarees">
+            <img src="assets/category-sarees.jpg" alt="Luxury Sarees Collection" class="category-card-img" loading="lazy" />
+            <div class="category-card-overlay">
+              <span id="sareesCountBadge" style="font-size: 0.72rem; color: var(--color-gold-light); letter-spacing: 0.16em; text-transform: uppercase; font-weight: 600; margin-bottom: 4px;">Heirloom Silks</span>
+              <h3 class="category-card-title">Royal Sarees</h3>
+              <p class="category-card-desc">Authentic Banarasi Katan, antique gold tissue, and pure heritage weaves.</p>
+              <span class="category-card-btn">Explore Sarees →</span>
+            </div>
+          </div>
+
+          <!-- Poshak Card -->
+          <div class="category-card" data-category="Poshak">
+            <img src="assets/category-poshak.jpg" alt="Rajputi Poshak Collection" class="category-card-img" loading="lazy" />
+            <div class="category-card-overlay">
+              <span id="poshakCountBadge" style="font-size: 0.72rem; color: var(--color-gold-light); letter-spacing: 0.16em; text-transform: uppercase; font-weight: 600; margin-bottom: 4px;">Rajputana Royalty</span>
+              <h3 class="category-card-title">Rajputi Poshak</h3>
+              <p class="category-card-desc">Imperial 4-piece ensembles adorned with hand-stitched gota patti & danka work.</p>
+              <span class="category-card-btn">Explore Poshak →</span>
+            </div>
+          </div>
+
+          <!-- Suits Card -->
+          <div class="category-card" data-category="Suits">
+            <img src="assets/category-suits.jpg" alt="Couture Suits Collection" class="category-card-img" loading="lazy" />
+            <div class="category-card-overlay">
+              <span id="suitsCountBadge" style="font-size: 0.72rem; color: var(--color-gold-light); letter-spacing: 0.16em; text-transform: uppercase; font-weight: 600; margin-bottom: 4px;">Festive Silhouettes</span>
+              <h3 class="category-card-title">Couture Suits</h3>
+              <p class="category-card-desc">Chanderi silk Anarkalis, plush velvet shararas, and regal hand-cut dupattas.</p>
+              <span class="category-card-btn">Explore Suits →</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Product Catalogue Section -->
+    <section class="section-padding" id="catalogue" style="background: var(--color-ivory-warm); border-top: 1px solid rgba(197,160,89,0.25);">
+      <div class="container">
+        <div class="section-header">
+          <span class="subheading-gold">Boutique Directory</span>
+          <h2 class="heading-section">The Imperial Collection</h2>
+          <div class="royal-divider">
+            <span class="line"></span>
+            <span class="lotus-icon">🪷</span>
+            <span class="line"></span>
+          </div>
+          <p class="section-desc">
+            Filter through our curated boutique pieces. Each creation is available for instant WhatsApp consultation, custom sizing, and bespoke delivery.
+          </p>
+        </div>
+
+        <!-- Filter & Control Panel -->
+        <div class="catalogue-controls-wrapper">
+          <div class="catalogue-filters-top">
+            <!-- Search Input -->
+            <div class="search-box-wrapper">
+              <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+              <input type="text" id="catalogueSearchInput" class="search-input" placeholder="Search by name, fabric, occasion or SKU..." aria-label="Search catalogue" />
+            </div>
+
+            <!-- Sorting & Attribute Filters -->
+            <div style="display: flex; gap: 14px; flex-wrap: wrap; align-items: center;">
+              <!-- Fabric Filter -->
+              <div class="sort-select-wrapper">
+                <label for="fabricFilterSelect" class="sort-label">Fabric:</label>
+                <select id="fabricFilterSelect" class="sort-select">
+                  <option value="All">All Fabrics</option>
+                  <option value="Silk">Pure Silk</option>
+                  <option value="Georgette">Georgette</option>
+                  <option value="Tissue">Tissue Silk</option>
+                  <option value="Velvet">Velvet</option>
+                  <option value="Chanderi">Chanderi</option>
+                </select>
+              </div>
+
+              <!-- Occasion Filter -->
+              <div class="sort-select-wrapper">
+                <label for="occasionFilterSelect" class="sort-label">Occasion:</label>
+                <select id="occasionFilterSelect" class="sort-select">
+                  <option value="All">All Occasions</option>
+                  <option value="Bridal">Bridal</option>
+                  <option value="Festive">Festive</option>
+                  <option value="Reception">Reception</option>
+                  <option value="Sangeet">Sangeet / Mehendi</option>
+                </select>
+              </div>
+
+              <!-- Sort Order -->
+              <div class="sort-select-wrapper">
+                <label for="catalogueSortSelect" class="sort-label">Sort:</label>
+                <select id="catalogueSortSelect" class="sort-select">
+                  <option value="featured">Featured First</option>
+                  <option value="price-low">Price: Low to High</option>
+                  <option value="price-high">Price: High to Low</option>
+                  <option value="newest">New Arrivals</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- Category Pills -->
+          <div class="filter-pills-row">
+            <button class="filter-pill cat-filter-pill active" data-category="All">All Creations</button>
+            <button class="filter-pill cat-filter-pill" data-category="Sarees">Sarees</button>
+            <button class="filter-pill cat-filter-pill" data-category="Poshak">Poshak</button>
+            <button class="filter-pill cat-filter-pill" data-category="Suits">Suits</button>
+          </div>
+
+          <div class="filter-counts-info">
+            <span id="productCountDisplay">Loading royal pieces...</span>
+            <span style="font-size: 0.75rem; color: var(--color-crimson); font-weight: 500;">Direct WhatsApp Enquiries Enabled</span>
+          </div>
+        </div>
+
+        <!-- Products Grid Container -->
+        <div class="product-grid" id="productGridContainer">
+          <!-- Dynamically populated by js/app.js -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Editorial Lookbook & Instagram Gallery -->
+    <section class="section-padding" id="lookbook">
+      <div class="container">
+        <div class="section-header">
+          <span class="subheading-gold">Visual Editorial</span>
+          <h2 class="heading-section">The Lookbook & Reels</h2>
+          <div class="royal-divider">
+            <span class="line"></span>
+            <span class="lotus-icon">🪷</span>
+            <span class="line"></span>
+          </div>
+          <p class="section-desc">
+            A window into the imperial grandeur of Shree Manglam. Explore our styling inspirations, fabric craftsmanship close-ups, and permitted Instagram Reels.
+          </p>
+        </div>
+
+        <div class="gallery-grid-layout" id="lookbookGridContainer">
+          <!-- Dynamically populated by js/app.js -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Brand Craftsmanship & Heritage Pillars -->
+    <section class="section-padding heritage-section" id="heritage">
+      <div class="container">
+        <div class="section-header">
+          <span class="subheading-gold">Our Philosophy</span>
+          <h2 class="heading-section">The Shree Manglam Heritage</h2>
+          <div class="royal-divider">
+            <span class="line"></span>
+            <span class="lotus-icon">🪷</span>
+            <span class="line"></span>
+          </div>
+          <p class="section-desc">
+            Rooted in timeless Indian traditions, every weave and needle-stroke tells a story of royalty, patience, and devotion to pure craftsmanship.
+          </p>
+        </div>
+
+        <div class="pillars-grid">
+          <div class="pillar-card">
+            <div class="pillar-icon-box">
+              <span style="font-size: 1.8rem;">🧵</span>
+            </div>
+            <h3 class="pillar-title">Authentic Handlooms</h3>
+            <p class="pillar-desc">
+              From pure mulberry silks and handspun Banarasi katan to lightweight organza, each drape is created on traditional wooden pit looms by master artisans.
+            </p>
+          </div>
+
+          <div class="pillar-card">
+            <div class="pillar-icon-box">
+              <span style="font-size: 1.8rem;">👑</span>
+            </div>
+            <h3 class="pillar-title">Royal Gota & Zardozi</h3>
+            <p class="pillar-desc">
+              Reviving ancestral Rajputi needlecraft including authentic danka, kundan, marodi, and gota patti with precious metallic threads that do not tarnish over time.
+            </p>
+          </div>
+
+          <div class="pillar-card">
+            <div class="pillar-icon-box">
+              <span style="font-size: 1.8rem;">💎</span>
+            </div>
+            <h3 class="pillar-title">Bespoke Bridal Concierge</h3>
+            <p class="pillar-desc">
+              Personalized color dyeing, bespoke sleeve/kurti customisations, and direct bridal styling guidance with our senior designers via WhatsApp video consultations.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Boutique Location & Google Maps Placement Section -->
+    <section class="section-padding location-section" id="location">
+      <div class="container">
+        <div class="section-header">
+          <span class="subheading-gold">Visit Our Flagship</span>
+          <h2 class="heading-section">Boutique & Location</h2>
+          <div class="royal-divider">
+            <span class="line"></span>
+            <span class="lotus-icon">🪷</span>
+            <span class="line"></span>
+          </div>
+          <p class="section-desc">
+            Step into our sanctuary of royal Indian couture. Experience the tactile weight of pure silks, intricate zardozi, and bespoke royal poshak in person.
+          </p>
+        </div>
+
+        <div class="location-layout">
+          <!-- Contact & Boutique Details -->
+          <div class="location-info-card">
+            <h3 class="location-info-title">Shree Manglam Flagship Boutique</h3>
+
+            <div class="contact-detail-row">
+              <svg class="contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                <circle cx="12" cy="10" r="3"></circle>
+              </svg>
+              <div>
+                <div class="contact-label">Boutique Address</div>
+                <div class="contact-value">Heritage Fashion Boulevard, M.I. Road, Jaipur, Rajasthan 302001, India</div>
+              </div>
+            </div>
+
+            <div class="contact-detail-row">
+              <svg class="contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <polyline points="12 6 12 12 16 14"></polyline>
+              </svg>
+              <div>
+                <div class="contact-label">Boutique Timings</div>
+                <div class="contact-value">Mon – Sat: 11:00 AM – 8:30 PM<br/><span style="color: var(--color-gold-dark); font-weight: 500;">Sunday: By Private Bridal Appointment</span></div>
+              </div>
+            </div>
+
+            <div class="contact-detail-row">
+              <svg class="contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+              </svg>
+              <div>
+                <div class="contact-label">Direct Inquiries & WhatsApp</div>
+                <div class="contact-value">+91 98765 43210 / contact@shreemanglam.com</div>
+              </div>
+            </div>
+
+            <a href="https://maps.google.com/?q=Jaipur+Rajasthan" target="_blank" rel="noopener noreferrer" class="btn-directions">
+              <span>Get Directions on Google Maps</span>
+              <span>↗</span>
+            </a>
+          </div>
+
+          <!-- Google Maps Placement -->
+          <div class="map-frame-wrapper">
+            <iframe 
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d113887.8188172834!2d75.7198759368553!3d26.91243364414601!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x396db477161b40bf%3A0x64fc1e6e5898ef42!2sJaipur%2C%20Rajasthan!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin" 
+              class="map-iframe" 
+              allowfullscreen="" 
+              loading="lazy" 
+              referrerpolicy="no-referrer-when-downgrade" 
+              title="Shree Manglam Boutique Location on Google Maps">
+            </iframe>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Product Detail Lightbox Modal -->
+  <div class="modal-backdrop" id="productDetailModal" role="dialog" aria-modal="true" aria-labelledby="modalProductTitle">
+    <div class="modal-dialog">
+      <button class="modal-close-btn" id="productModalCloseBtn" aria-label="Close dialog">✕</button>
+      <div class="product-detail-layout">
+        <!-- Gallery Column -->
+        <div class="product-gallery-viewer">
+          <div class="gallery-main-frame">
+            <img id="modalMainGalleryImg" src="assets/category-sarees.jpg" alt="Product view" class="gallery-main-img" />
+          </div>
+          <div class="gallery-thumbnails-strip" id="modalThumbnailsStrip">
+            <!-- Thumbnails injected by js/app.js -->
+          </div>
+        </div>
+
+        <!-- Info Column -->
+        <div class="product-info-column">
+          <span class="detail-category-tag" id="modalProductCategory">Sarees</span>
+          <h2 class="detail-title" id="modalProductTitle">Royal Banarasi Saree</h2>
+          
+          <div class="detail-pricing-box">
+            <span class="detail-price" id="modalProductPrice">₹48,500</span>
+            <span class="detail-compare-price" id="modalProductComparePrice">₹56,000</span>
+            <span style="font-size: 0.75rem; color: var(--color-text-muted); margin-left: auto;">SKU: <span id="modalProductSku">SM-001</span></span>
+          </div>
+
+          <p class="detail-description" id="modalProductDescription">
+            Heirloom pure silk Banarasi saree woven with authentic gold zari.
+          </p>
+
+          <table class="detail-specs-table">
+            <tbody>
+              <tr>
+                <th>Fabric</th>
+                <td id="modalProductFabric">Pure Katan Silk</td>
+              </tr>
+              <tr>
+                <th>Colour</th>
+                <td id="modalProductColour">Deep Crimson & Gold</td>
+              </tr>
+              <tr>
+                <th>Occasion</th>
+                <td id="modalProductOccasion">Bridal & Grand Reception</td>
+              </tr>
+              <tr>
+                <th>Availability</th>
+                <td id="modalProductAvailability" style="color: var(--color-available); font-weight: 600;">Available in Boutique</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <button id="modalWhatsAppBtn" class="btn-detail-whatsapp">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+            </svg>
+            <span>Enquire On WhatsApp</span>
+          </button>
+          <p class="detail-help-note">
+            Pre-fills this product name, SKU & link into WhatsApp for immediate concierge assistance.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Lookbook Lightbox Modal -->
+  <div class="modal-backdrop" id="lookbookLightboxModal" role="dialog" aria-modal="true">
+    <div class="modal-dialog" style="max-width: 680px; text-align: center; padding: 24px;">
+      <button class="modal-close-btn" id="lookbookCloseBtn" aria-label="Close dialog">✕</button>
+      <img id="lookbookLightboxImg" src="assets/hero-banner.jpg" alt="Lookbook" style="width: 100%; max-height: 65vh; object-fit: contain; border-radius: var(--radius-xs); margin-bottom: 18px;" />
+      <span id="lookbookLightboxTag" style="font-size: 0.75rem; color: var(--color-gold-dark); letter-spacing: 0.16em; text-transform: uppercase; font-weight: 600;">Editorial</span>
+      <h3 id="lookbookLightboxTitle" style="font-family: var(--font-serif-royal); font-size: 1.4rem; color: var(--color-crimson); margin-top: 6px; margin-bottom: 14px;">The Crimson Edit</h3>
+      <a id="lookbookLightboxInstaLink" href="#" target="_blank" rel="noopener noreferrer" class="btn-luxury-primary" style="padding: 10px 22px; font-size: 0.78rem;">
+        <span>View on Instagram</span> ↗
+      </a>
+    </div>
+  </div>
+
+  <!-- Floating WhatsApp Concierge Widget -->
+  <aside class="floating-wa-concierge" aria-label="Customer Support">
+    <div class="floating-wa-badge">Need Bridal Guidance? Chat with us</div>
+    <button class="floating-wa-btn" id="floatingWhatsAppBtn" aria-label="Open WhatsApp Concierge">
+      <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+      </svg>
+    </button>
+  </aside>
+
+  <!-- Royal Luxury Footer -->
+  <footer class="royal-footer">
+    <div class="container">
+      <div class="footer-top-grid">
+        <!-- Brand Info -->
+        <div>
+          <div class="footer-brand-emblem">
+            <img src="assets/logo.jpg" alt="Shree Manglam Logo" class="footer-logo-img" />
+            <div>
+              <span class="footer-brand-title">Shree Manglam</span>
+              <div style="font-size: 0.65rem; color: var(--color-gold-light); letter-spacing: 0.2em; text-transform: uppercase;">Tradition Meets Elegance</div>
+            </div>
+          </div>
+          <p class="footer-brand-desc">
+            An imperial fashion sanctuary celebrating handwoven Banarasi sarees, Rajasthani Rajputi poshak, and bespoke occasion wear since inception.
+          </p>
+        </div>
+
+        <!-- Collections -->
+        <div>
+          <h4 class="footer-col-title">Collections</h4>
+          <ul class="footer-nav-list">
+            <li><a href="#catalogue" onclick="App.setCategory('Sarees')" class="footer-nav-link">Royal Banarasi Sarees</a></li>
+            <li><a href="#catalogue" onclick="App.setCategory('Poshak')" class="footer-nav-link">Rajputi Rajputana Poshak</a></li>
+            <li><a href="#catalogue" onclick="App.setCategory('Suits')" class="footer-nav-link">Festive Anarkalis & Suits</a></li>
+            <li><a href="#lookbook" class="footer-nav-link">Editorial Lookbook</a></li>
+            <li><a href="#heritage" class="footer-nav-link">Artisanal Weaves</a></li>
+          </ul>
+        </div>
+
+        <!-- Boutique Services -->
+        <div>
+          <h4 class="footer-col-title">Client Services</h4>
+          <ul class="footer-nav-list">
+            <li><a href="https://wa.me/919876543210" target="_blank" class="footer-nav-link">WhatsApp Bridal Consultation</a></li>
+            <li><a href="#location" class="footer-nav-link">Flagship Boutique Visit</a></li>
+            <li><a href="#location" class="footer-nav-link">Custom Sizing & Color Dyeing</a></li>
+            <li><a href="#location" class="footer-nav-link">Worldwide Shipping Inquiries</a></li>
+            <li><a href="admin.html" class="footer-nav-link" style="color: var(--color-gold-light);">Admin Portal</a></li>
+          </ul>
+        </div>
+
+        <!-- Flagship Contact -->
+        <div>
+          <h4 class="footer-col-title">Jaipur Flagship</h4>
+          <p style="font-size: 0.85rem; color: rgba(250,247,242,0.75); line-height: 1.7; margin-bottom: 14px;">
+            Heritage Fashion Boulevard, M.I. Road, Jaipur, Rajasthan 302001<br/>
+            <strong>WhatsApp:</strong> +91 98765 43210<br/>
+            <strong>Email:</strong> contact@shreemanglam.com
+          </p>
+          <a href="https://maps.google.com/?q=Jaipur+Rajasthan" target="_blank" class="developer-credits-badge">
+            <span>View on Google Maps</span> ↗
+          </a>
+        </div>
+      </div>
+
+      <!-- Bottom Bar with Developer Info -->
+      <div class="footer-bottom-bar">
+        <div>
+          © 2026 Shree Manglam. All Rights Reserved. Tradition Meets Elegance.
+        </div>
+        <div style="display: flex; align-items: center; gap: 14px;">
+          <!-- Developer Credits as requested by USER -->
+          <a href="https://shiv.dev" target="_blank" rel="noopener noreferrer" class="developer-credits-badge" title="Architected and engineered by SHIV">
+            <span>Crafted with elegance by SHIV</span>
+          </a>
+          <a href="admin.html" style="font-size: 0.75rem; color: var(--color-gold-light); text-decoration: underline;">Admin</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Application Logic Scripts -->
+  <script src="js/data.js"></script>
+  <script src="js/store.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

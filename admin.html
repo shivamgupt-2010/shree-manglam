@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Dashboard — Shree Manglam Fashion Storefront</title>
+
+  <!-- Favicon / Brand Icon -->
+  <link rel="icon" type="image/jpeg" href="assets/logo.jpg" />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Cormorant+Garamond:wght@400;600&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/variables.css" />
+  <link rel="stylesheet" href="css/main.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/admin.css" />
+</head>
+<body class="admin-body">
+
+  <!-- Authentication Gate Modal -->
+  <div class="auth-gate-modal" id="adminAuthGate">
+    <div class="auth-gate-card">
+      <img src="assets/logo.jpg" alt="Shree Manglam" style="width: 72px; height: 72px; border-radius: 50%; border: 2px solid var(--color-gold); margin: 0 auto 16px;" />
+      <h2 style="font-family: var(--font-serif-royal); font-size: 1.4rem; color: var(--color-crimson); margin-bottom: 6px;">Shree Manglam Admin</h2>
+      <p style="font-size: 0.85rem; color: var(--color-text-muted); margin-bottom: 24px;">Enter administrative passcode to manage products and gallery.</p>
+      
+      <form id="adminLoginForm">
+        <div style="margin-bottom: 20px;">
+          <input type="password" id="adminPassInput" class="form-input" placeholder="Enter Passcode (default: shree123)" required style="text-align: center; letter-spacing: 0.1em; font-size: 1rem;" />
+        </div>
+        <button type="submit" class="btn-luxury-primary" style="width: 100%; justify-content: center;">Authenticate</button>
+      </form>
+      <div style="margin-top: 20px; font-size: 0.75rem; color: var(--color-text-muted);">
+        <a href="/" style="color: var(--color-gold-dark); text-decoration: underline;">← Return to Storefront</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Admin Top Navigation -->
+  <header class="admin-navbar">
+    <div class="admin-nav-brand">
+      <img src="assets/logo.jpg" alt="Logo" class="admin-nav-logo" />
+      <div>
+        <h1 class="admin-nav-title">Shree Manglam</h1>
+        <div style="font-size: 0.65rem; color: var(--color-gold-light); letter-spacing: 0.18em; text-transform: uppercase;">Product & Media Dashboard</div>
+      </div>
+    </div>
+
+    <div class="admin-nav-actions">
+      <a href="/" target="_blank" class="btn-admin-action btn-admin-outline">
+        <span>View Live Storefront</span> ↗
+      </a>
+      <button class="btn-admin-action btn-admin-primary" id="addNewProductBtn">
+        <span>+ Add Couture Piece</span>
+      </button>
+      <button class="btn-admin-action btn-admin-outline" id="adminLogoutBtn">Logout</button>
+    </div>
+  </header>
+
+  <!-- Main Dashboard Container -->
+  <main class="admin-container">
+    <!-- Live Overview Metrics -->
+    <section class="metrics-grid" aria-label="Directory Metrics">
+      <div class="metric-card">
+        <div class="metric-icon-box">⚜️</div>
+        <div>
+          <div class="metric-value" id="metricTotalProducts">0</div>
+          <div class="metric-label">Total Pieces</div>
+        </div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-icon-box">🥻</div>
+        <div>
+          <div class="metric-value" id="metricSarees">0</div>
+          <div class="metric-label">Royal Sarees</div>
+        </div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-icon-box">👑</div>
+        <div>
+          <div class="metric-value" id="metricPoshak">0</div>
+          <div class="metric-label">Rajputi Poshak</div>
+        </div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-icon-box">✨</div>
+        <div>
+          <div class="metric-value" id="metricSuits">0</div>
+          <div class="metric-label">Couture Suits</div>
+        </div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-icon-box">📸</div>
+        <div>
+          <div class="metric-value" id="metricGallery">0</div>
+          <div class="metric-label">Lookbook Items</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Product Directory Management -->
+    <section class="admin-card">
+      <div class="admin-card-header">
+        <div>
+          <h2 class="admin-card-title">Product Catalogue Management</h2>
+          <p style="font-size: 0.82rem; color: var(--color-text-muted); margin-top: 2px;">Manage product descriptions, prices in paise/rupees, photos, and availability.</p>
+        </div>
+
+        <div style="display: flex; gap: 12px; align-items: center;">
+          <input type="text" id="adminSearchInput" class="form-input" placeholder="Search by name, SKU or category..." style="width: 280px; padding: 8px 14px;" />
+        </div>
+      </div>
+
+      <div class="table-responsive">
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th style="width: 65px;">Photo</th>
+              <th>Product Name & SKU</th>
+              <th>Category</th>
+              <th>Price</th>
+              <th>Status</th>
+              <th>Availability</th>
+              <th style="width: 170px;">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="productsTableBody">
+            <!-- Rendered by js/admin.js -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Lookbook & Instagram Reels Management -->
+    <section class="admin-card">
+      <div class="admin-card-header">
+        <div>
+          <h2 class="admin-card-title">Editorial Lookbook & Reels</h2>
+          <p style="font-size: 0.82rem; color: var(--color-text-muted); margin-top: 2px;">Curate high-fashion photos and Instagram Reel embeds for the public gallery.</p>
+        </div>
+
+        <button class="btn-admin-action btn-admin-primary" id="addGalleryItemBtn">
+          <span>+ Add Lookbook Item</span>
+        </button>
+      </div>
+
+      <div class="table-responsive">
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th style="width: 60px;">Preview</th>
+              <th>Title & Tag</th>
+              <th>Media Type</th>
+              <th>Instagram Link</th>
+              <th style="width: 100px;">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="galleryTableBody">
+            <!-- Rendered by js/admin.js -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- SHIV Centralized Database (BaaS) Integration -->
+    <section class="admin-card" id="shivDbSection">
+      <div class="admin-card-header">
+        <div>
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <h2 class="admin-card-title">SHIV Database & Auth Integration</h2>
+            <span id="shivDbStatusBadge" class="status-pill draft" style="font-size: 0.7rem;">Checking...</span>
+          </div>
+          <p style="font-size: 0.82rem; color: var(--color-text-muted); margin-top: 2px;">Connect and synchronize products, media, and customer leads with the centralized SHIV BaaS backend.</p>
+        </div>
+
+        <div style="display: flex; gap: 10px;">
+          <button class="btn-admin-action btn-admin-outline" id="testShivDbBtn" style="color: var(--color-text-primary); border-color: var(--color-gold);">
+            <span>Test Connection</span>
+          </button>
+          <button class="btn-admin-action btn-admin-primary" id="syncShivDbBtn">
+            <span>Sync to SHIV DB</span>
+          </button>
+        </div>
+      </div>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr auto; gap: 16px; align-items: flex-end;">
+        <div>
+          <label class="form-label">SHIV Database Endpoint URL</label>
+          <input type="text" id="shivDbEndpointInput" class="form-input" value="https://shiv-database.onrender.com" placeholder="https://shiv-database.onrender.com or http://localhost:8000" />
+        </div>
+        <div>
+          <label class="form-label">Project / API Key (Optional)</label>
+          <input type="text" id="shivDbApiKeyInput" class="form-input" placeholder="Enter SHIV API Key (e.g. shiv_live_...)" />
+        </div>
+        <div>
+          <button class="btn-admin-action btn-admin-outline" id="saveShivDbConfigBtn" style="color: var(--color-text-primary); border-color: var(--color-gold); height: 42px;">
+            <span>Save Settings</span>
+          </button>
+        </div>
+      </div>
+      <div id="shivDbLogMsg" style="font-size: 0.78rem; color: var(--color-text-muted); margin-top: 12px;"></div>
+    </section>
+
+    <!-- System Backups & Factory Reset -->
+    <section class="admin-card">
+      <div class="admin-card-header">
+        <div>
+          <h2 class="admin-card-title">Data Backup & Factory Restore</h2>
+          <p style="font-size: 0.82rem; color: var(--color-text-muted); margin-top: 2px;">Export or restore the entire product directory and media configuration as JSON.</p>
+        </div>
+
+        <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+          <button class="btn-admin-action btn-admin-outline" id="exportBackupBtn" style="color: var(--color-text-primary); border-color: var(--color-gold);">
+            <span>Download JSON Backup</span>
+          </button>
+          
+          <label class="btn-admin-action btn-admin-outline" style="color: var(--color-text-primary); border-color: var(--color-gold); cursor: pointer;">
+            <span>Import Backup</span>
+            <input type="file" id="importBackupInput" accept=".json" style="display: none;" />
+          </label>
+
+          <button class="btn-admin-action" id="resetDefaultsBtn" style="background: #ffebee; color: var(--color-crimson); border: 1px solid rgba(197,160,89,0.3);">
+            <span>Reset to Factory Defaults</span>
+          </button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Add / Edit Product Modal -->
+  <div class="modal-backdrop" id="productFormModal" role="dialog" aria-modal="true">
+    <div class="modal-dialog" style="max-width: 860px;">
+      <button class="modal-close-btn" id="productFormCloseBtn" aria-label="Close dialog">✕</button>
+      
+      <div style="padding: 24px 28px 16px; border-bottom: 1px solid rgba(197,160,89,0.25);">
+        <h2 id="formModalTitle" style="font-family: var(--font-serif-royal); font-size: 1.4rem; color: var(--color-crimson); text-transform: uppercase;">Add New Couture Piece</h2>
+      </div>
+
+      <div class="admin-modal-body">
+        <form id="productForm">
+          <div class="admin-form-grid">
+            <!-- Product Name -->
+            <div class="form-group-full">
+              <label for="formName" class="form-label">Product Name *</label>
+              <input type="text" id="formName" class="form-input" placeholder="e.g. Royal Crimson Banarasi Katan Silk Saree" required />
+            </div>
+
+            <!-- Category -->
+            <div>
+              <label for="formCategory" class="form-label">Category *</label>
+              <select id="formCategory" class="form-select" required>
+                <option value="Sarees">Sarees</option>
+                <option value="Poshak">Poshak</option>
+                <option value="Suits">Suits</option>
+              </select>
+            </div>
+
+            <!-- SKU -->
+            <div>
+              <label for="formSku" class="form-label">SKU / Code</label>
+              <input type="text" id="formSku" class="form-input" placeholder="e.g. SM-SR-0103" />
+            </div>
+
+            <!-- Price in Rupees -->
+            <div>
+              <label for="formPrice" class="form-label">Price (₹ INR) *</label>
+              <input type="number" id="formPrice" class="form-input" placeholder="48500" required min="1" />
+              <span style="font-size: 0.72rem; color: var(--color-text-muted);">Stored as paise in backend/data model</span>
+            </div>
+
+            <!-- Compare-at Price -->
+            <div>
+              <label for="formComparePrice" class="form-label">Compare-at Price (₹ Optional)</label>
+              <input type="number" id="formComparePrice" class="form-input" placeholder="56000" min="0" />
+            </div>
+
+            <!-- Fabric -->
+            <div>
+              <label for="formFabric" class="form-label">Fabric / Weave</label>
+              <input type="text" id="formFabric" class="form-input" placeholder="e.g. Pure Katan Silk, Georgette" />
+            </div>
+
+            <!-- Colour -->
+            <div>
+              <label for="formColour" class="form-label">Colour Palette</label>
+              <input type="text" id="formColour" class="form-input" placeholder="e.g. Crimson Maroon & Antique Gold" />
+            </div>
+
+            <!-- Occasion -->
+            <div>
+              <label for="formOccasion" class="form-label">Occasion</label>
+              <input type="text" id="formOccasion" class="form-input" placeholder="e.g. Bridal & Grand Reception" />
+            </div>
+
+            <!-- Availability -->
+            <div>
+              <label for="formAvailability" class="form-label">Availability Status</label>
+              <select id="formAvailability" class="form-select">
+                <option value="Available">Available (In Boutique)</option>
+                <option value="Made to Order">Made to Order (15-21 days)</option>
+                <option value="Unavailable">Unavailable / Out of Stock</option>
+              </select>
+            </div>
+
+            <!-- Multi-Image Manager -->
+            <div class="form-group-full">
+              <label class="form-label">Multiple Product Photos (PRD Image Workflow)</label>
+              <div class="image-uploader-box">
+                <div style="display: flex; gap: 10px;">
+                  <input type="text" id="imageUrlInput" class="form-input" placeholder="Paste image file path or URL (e.g. assets/products/sm-saree-01.jpg)" />
+                  <button type="button" id="addImageUrlBtn" class="btn-luxury-primary" style="padding: 8px 18px; font-size: 0.75rem;">+ Add Photo</button>
+                </div>
+                <div class="image-preview-strip" id="imagePreviewsContainer">
+                  <!-- Injected by js/admin.js -->
+                </div>
+              </div>
+            </div>
+
+            <!-- Description -->
+            <div class="form-group-full">
+              <label for="formDescription" class="form-label">Product Editorial Story / Description</label>
+              <textarea id="formDescription" class="form-textarea" rows="3" placeholder="Describe the weaving technique, zari details, and heritage aesthetic..."></textarea>
+            </div>
+
+            <!-- Featured & Status -->
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <input type="checkbox" id="formFeatured" style="width: 18px; height: 18px; accent-color: var(--color-crimson);" />
+              <label for="formFeatured" style="font-size: 0.85rem; font-weight: 500;">Highlight as Featured Piece</label>
+            </div>
+
+            <div>
+              <label for="formStatus" class="form-label">Publishing Status</label>
+              <select id="formStatus" class="form-select">
+                <option value="published">Published (Visible on storefront)</option>
+                <option value="draft">Draft (Hidden)</option>
+              </select>
+            </div>
+          </div>
+
+          <div style="margin-top: 28px; padding-top: 18px; border-top: 1px solid rgba(197,160,89,0.3); display: flex; justify-content: flex-end; gap: 14px;">
+            <button type="button" class="btn-admin-action btn-admin-outline" id="productFormCancelBtn" style="color: var(--color-text-primary); border-color: var(--color-gold);">Cancel</button>
+            <button type="submit" class="btn-luxury-primary" style="padding: 10px 24px; font-size: 0.82rem;">Save Couture Piece</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Delete Confirmation Dialog -->
+  <div class="modal-backdrop" id="deleteConfirmModal" role="dialog" aria-modal="true">
+    <div class="modal-dialog" style="max-width: 440px; text-align: center; padding: 32px 24px;">
+      <div style="font-size: 2.2rem; color: var(--color-crimson); margin-bottom: 12px;">⚠️</div>
+      <h3 style="font-family: var(--font-serif-royal); font-size: 1.3rem; color: var(--color-crimson); margin-bottom: 8px;">Confirm Deletion</h3>
+      <p style="font-size: 0.88rem; color: var(--color-text-secondary); margin-bottom: 24px;">
+        Are you sure you want to remove <strong id="deleteProductNameDisplay">this piece</strong>? This action will remove it from the public catalogue.
+      </p>
+      <div style="display: flex; gap: 12px; justify-content: center;">
+        <button class="btn-admin-action btn-admin-outline" id="cancelDeleteBtn" style="color: var(--color-text-primary); border-color: var(--color-gold);">Cancel</button>
+        <button class="btn-luxury-primary" id="confirmDeleteBtn" style="background: var(--color-crimson); color: #fff; padding: 10px 22px;">Delete Piece</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/data.js"></script>
+  <script src="js/store.js"></script>
+  <script src="js/admin.js"></script>
+</body>
+</html>
