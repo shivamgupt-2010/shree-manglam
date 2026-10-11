@@ -1,6 +1,6 @@
 /**
  * SHREE MANGLAM — INITIAL DATA & ROYAL CATALOGUE
- * Phase 1 Product Data Model compliant (prices stored in paise, categories, multiple images)
+ * Royal Couture Product Catalogue & Data Model (prices stored in paise, categories, multiple images)
  */
 
 const INITIAL_PRODUCTS = [

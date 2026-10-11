@@ -43,23 +43,31 @@ const App = {
     const mobileDrawer = document.getElementById('mobileDrawer');
     const mobileDrawerClose = document.getElementById('mobileDrawerClose');
 
-    if (mobileToggle && mobileDrawer) {
-      mobileToggle.addEventListener('click', () => {
-        mobileDrawer.classList.add('open');
-      });
-    }
+    const openDrawer = () => {
+      mobileDrawer?.classList.add('open');
+      mobileDrawer?.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    };
 
-    if (mobileDrawerClose && mobileDrawer) {
-      mobileDrawerClose.addEventListener('click', () => {
-        mobileDrawer.classList.remove('open');
-      });
-    }
+    const closeDrawer = () => {
+      mobileDrawer?.classList.remove('open');
+      mobileDrawer?.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    };
+
+    mobileToggle?.addEventListener('click', openDrawer);
+    mobileDrawerClose?.addEventListener('click', closeDrawer);
+
+    // Close when tapping outside panel on backdrop
+    mobileDrawer?.addEventListener('click', (e) => {
+      if (e.target === mobileDrawer) {
+        closeDrawer();
+      }
+    });
 
     // Close mobile drawer on link click
     document.querySelectorAll('.mobile-nav-link').forEach(link => {
-      link.addEventListener('click', () => {
-        mobileDrawer?.classList.remove('open');
-      });
+      link.addEventListener('click', closeDrawer);
     });
   },
 

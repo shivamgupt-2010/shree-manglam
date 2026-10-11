@@ -6,7 +6,7 @@
 
 ## 🌟 Overview & Highlights
 
-This project implements the complete **Phase 1 Product Requirements Document (PRD)** for **Shree Manglam**:
+This project implements the complete **Royal Haute Couture Digital Platform** for **Shree Manglam**:
 1. **Bespoke Luxury Visual System**: Built using the brand logo emblem, royal crimson (`#5a0e1c`), antique gold (`#c5a059`), and silk parchment (`#faf7f2`), with *Cormorant Garamond* and *Cinzel* typography.
 2. **Customer Storefront (`index.html`)**:
    - Editorial Hero Section with royal typography and tagline.
@@ -18,7 +18,7 @@ This project implements the complete **Phase 1 Product Requirements Document (PR
    - Flagship boutique location and **Google Maps placement**.
    - Floating luxury WhatsApp concierge widget.
 3. **Admin Management Dashboard (`admin.html`)**:
-   - Passkey-authenticated session (`shree123` or `admin`).
+   - Passkey-authenticated administrative session.
    - Live metrics overview (Total Products, Sarees, Poshak, Suits, Gallery Entries).
    - Complete Product CRUD (Create, Edit, Publish/Draft, Delete with confirmation).
    - Multi-photo workflow with cover image selection and reordering.
@@ -102,19 +102,14 @@ The website includes `netlify.toml` pre-configured for instant zero-config deplo
 ## 🔐 Administrative Access
 
 - **Admin Portal URL**: `/admin.html` (or `/admin` on Netlify).
-- **Default Administrative Passcode**: `shree123` (or `admin`).
-- **To change the passcode**:
-  Open `js/admin.js` around line 43:
-  ```javascript
-  if (pass === 'YOUR_NEW_PASSCODE') { ... }
-  ```
+- **Security**: Passkey-protected administrative session with real-time CRUD and catalog management.
 
 ---
 
 ## 👨‍💻 Developer Information
 
 - **Client**: Shree Manglam
-- **Project**: Phase 1 Luxury Fashion Digital Storefront & Admin Portal
+- **Project**: Royal Luxury Fashion Digital Storefront & Admin Portal
 - **Designed & Engineered by**: **SHIV**
 - **Developer Credit Badge**: Present in the royal footer with backlink to SHIV.
 - **Tech Stack**:

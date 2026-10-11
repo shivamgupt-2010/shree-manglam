@@ -30,7 +30,7 @@
       
       <form id="adminLoginForm">
         <div style="margin-bottom: 20px;">
-          <input type="password" id="adminPassInput" class="form-input" placeholder="Enter Passcode (default: shree123)" required style="text-align: center; letter-spacing: 0.1em; font-size: 1rem;" />
+          <input type="password" id="adminPassInput" class="form-input" placeholder="Enter Administrative Passcode" required style="text-align: center; letter-spacing: 0.1em; font-size: 1rem;" autocomplete="current-password" />
         </div>
         <button type="submit" class="btn-luxury-primary" style="width: 100%; justify-content: center;">Authenticate</button>
       </form>
@@ -308,12 +308,29 @@
 
             <!-- Multi-Image Manager -->
             <div class="form-group-full">
-              <label class="form-label">Multiple Product Photos (PRD Image Workflow)</label>
+              <label class="form-label">Product Photos (Upload Files & Live Preview)</label>
               <div class="image-uploader-box">
-                <div style="display: flex; gap: 10px;">
-                  <input type="text" id="imageUrlInput" class="form-input" placeholder="Paste image file path or URL (e.g. assets/products/sm-saree-01.jpg)" />
-                  <button type="button" id="addImageUrlBtn" class="btn-luxury-primary" style="padding: 8px 18px; font-size: 0.75rem;">+ Add Photo</button>
+                <!-- Direct File Upload & Drag-and-Drop Area -->
+                <div class="image-dropzone" id="imageDropzone">
+                  <input type="file" id="productFileInput" accept="image/png, image/jpeg, image/webp, image/jpg" multiple style="display: none;" />
+                  <div class="dropzone-content">
+                    <span class="dropzone-icon">📷</span>
+                    <div class="dropzone-text">
+                      <strong>Click to Upload Photos</strong> or drag & drop files here
+                    </div>
+                    <div class="dropzone-subtext">Directly select photos from your device, phone, or computer (JPG, PNG, WEBP)</div>
+                    <button type="button" class="btn-luxury-primary" id="triggerFileSelectBtn" style="margin-top: 10px; padding: 8px 20px; font-size: 0.76rem; pointer-events: none;">Browse Files</button>
+                  </div>
                 </div>
+
+                <!-- Secondary URL/Path input -->
+                <div class="image-url-row" style="display: flex; gap: 10px; margin-top: 14px;">
+                  <input type="text" id="imageUrlInput" class="form-input" placeholder="Or enter image URL / local path (e.g. assets/category-sarees.jpg)" />
+                  <button type="button" id="addImageUrlBtn" class="btn-luxury-outline" style="color: var(--color-crimson); border-color: var(--color-gold); padding: 8px 18px; font-size: 0.75rem; white-space: nowrap;">+ Add URL</button>
+                </div>
+                <div id="uploadStatusText" style="font-size: 0.78rem; color: var(--color-gold-dark); margin-top: 8px; font-weight: 500; display: none;"></div>
+
+                <!-- Image Previews Container -->
                 <div class="image-preview-strip" id="imagePreviewsContainer">
                   <!-- Injected by js/admin.js -->
                 </div>

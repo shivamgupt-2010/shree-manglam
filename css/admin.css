@@ -302,12 +302,44 @@
 
 /* Image Manager in Admin */
 .image-uploader-box {
-  border: 2px dashed rgba(197, 160, 89, 0.4);
+  border: 1px solid rgba(197, 160, 89, 0.35);
   border-radius: var(--radius-sm);
-  padding: 20px;
-  background: var(--color-ivory);
+  padding: 16px;
+  background: #fff;
+  margin-top: 8px;
+}
+
+.image-dropzone {
+  border: 2px dashed rgba(197, 160, 89, 0.6);
+  border-radius: var(--radius-xs);
+  padding: 24px 16px;
+  background: var(--color-ivory-warm);
+  cursor: pointer;
   text-align: center;
-  margin-top: 10px;
+  transition: all var(--transition-fast);
+}
+
+.image-dropzone:hover, .image-dropzone.dragover {
+  border-color: var(--color-crimson);
+  background: rgba(90, 14, 28, 0.04);
+  transform: scale(1.005);
+}
+
+.dropzone-icon {
+  font-size: 2rem;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.dropzone-text {
+  font-size: 0.88rem;
+  color: var(--color-text-primary);
+  margin-bottom: 4px;
+}
+
+.dropzone-subtext {
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
 }
 
 .image-preview-strip {

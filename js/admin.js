@@ -44,14 +44,14 @@ const AdminApp = {
     loginForm?.addEventListener('submit', (e) => {
       e.preventDefault();
       const pass = document.getElementById('adminPassInput')?.value;
-      // Default passcode: shree123 or admin
-      if (pass === 'shree123' || pass === 'admin') {
+      // Authenticate with admin passcode
+      if (pass === 'shreem') {
         sessionStorage.setItem(STORAGE_KEYS.ADMIN_AUTH, 'authenticated');
         document.getElementById('adminAuthGate').style.display = 'none';
         this.renderMetrics();
         this.renderProductsTable();
       } else {
-        alert('Invalid administrative passcode. Please enter: shree123');
+        alert('Invalid administrative passcode. Access denied.');
       }
     });
 
@@ -181,6 +181,59 @@ const AdminApp = {
     const searchInput = document.getElementById('adminSearchInput');
     searchInput?.addEventListener('input', (e) => {
       this.renderProductsTable(e.target.value);
+    });
+
+    // Direct Image File Upload & Dropzone Handling
+    const fileInput = document.getElementById('productFileInput');
+    const dropzone = document.getElementById('imageDropzone');
+    const statusText = document.getElementById('uploadStatusText');
+
+    const handleFiles = async (files) => {
+      if (!files || files.length === 0) return;
+      if (statusText) {
+        statusText.style.display = 'block';
+        statusText.textContent = `Optimizing ${files.length} photo(s)...`;
+      }
+      for (const file of Array.from(files)) {
+        if (!file.type.startsWith('image/')) continue;
+        try {
+          const compressed = await this.compressAndLoadImage(file);
+          this.activeImagesList.push(compressed);
+        } catch (err) {
+          console.error('Failed to load image', file.name, err);
+        }
+      }
+      if (statusText) {
+        statusText.textContent = `✓ ${files.length} photo(s) added successfully!`;
+        setTimeout(() => { statusText.style.display = 'none'; }, 2800);
+      }
+      this.renderImagePreviews();
+      if (fileInput) fileInput.value = '';
+    };
+
+    dropzone?.addEventListener('click', () => {
+      fileInput?.click();
+    });
+
+    fileInput?.addEventListener('change', (e) => {
+      handleFiles(e.target.files);
+    });
+
+    dropzone?.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      dropzone.classList.add('dragover');
+    });
+
+    dropzone?.addEventListener('dragleave', () => {
+      dropzone.classList.remove('dragover');
+    });
+
+    dropzone?.addEventListener('drop', (e) => {
+      e.preventDefault();
+      dropzone.classList.remove('dragover');
+      if (e.dataTransfer && e.dataTransfer.files) {
+        handleFiles(e.dataTransfer.files);
+      }
     });
 
     // Add Image URL Button
@@ -521,6 +574,40 @@ const AdminApp = {
         if (logMsg) logMsg.textContent = `Sync failed: ${res.message}. Ensure SHIV Database is running.`;
         alert(`Could not sync: ${res.message}`);
       }
+    });
+  },
+
+  // 8. Client-side Image Compression & Optimization
+  compressAndLoadImage(file, maxWidth = 1200, quality = 0.82) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onerror = () => reject(new Error('Failed to read file'));
+      reader.onload = (e) => {
+        const img = new Image();
+        img.onerror = () => reject(new Error('Failed to parse image'));
+        img.onload = () => {
+          let width = img.width;
+          let height = img.height;
+          if (width > maxWidth || height > maxWidth) {
+            if (width > height) {
+              height = Math.round((height * maxWidth) / width);
+              width = maxWidth;
+            } else {
+              width = Math.round((width * maxWidth) / height);
+              height = maxWidth;
+            }
+          }
+          const canvas = document.createElement('canvas');
+          canvas.width = width;
+          canvas.height = height;
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0, width, height);
+          const dataUrl = canvas.toDataURL('image/jpeg', quality);
+          resolve(dataUrl);
+        };
+        img.src = e.target.result;
+      };
+      reader.readAsDataURL(file);
     });
   }
 };

@@ -1343,7 +1343,118 @@
 }
 
 /* --------------------------------------------------------------------------
-   12. Responsive Breakpoints
+   12. Mobile Drawer Component
+   -------------------------------------------------------------------------- */
+.mobile-drawer-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(24, 21, 20, 0.78);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 2500;
+  display: flex;
+  justify-content: flex-end;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.mobile-drawer-overlay.open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.mobile-drawer-panel {
+  background: var(--color-surface-white);
+  width: 84%;
+  max-width: 320px;
+  height: 100%;
+  padding: 28px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  box-shadow: -8px 0 28px rgba(0, 0, 0, 0.35);
+  transform: translateX(100%);
+  transition: transform 0.32s cubic-bezier(0.16, 1, 0.3, 1);
+  overflow-y: auto;
+}
+
+.mobile-drawer-overlay.open .mobile-drawer-panel {
+  transform: translateX(0);
+}
+
+.mobile-drawer-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(197, 160, 89, 0.3);
+}
+
+.mobile-drawer-title {
+  font-family: var(--font-serif-royal);
+  font-size: 1.15rem;
+  color: var(--color-crimson);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.mobile-drawer-close-btn {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: var(--color-ivory-warm);
+  border: 1px solid rgba(197, 160, 89, 0.3);
+  color: var(--color-crimson);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.mobile-drawer-close-btn:hover {
+  background: var(--color-crimson);
+  color: #fff;
+}
+
+.mobile-drawer-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.mobile-nav-link {
+  font-size: 0.92rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-text-primary);
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(197, 160, 89, 0.15);
+  font-weight: 500;
+  transition: color var(--transition-fast), transform var(--transition-fast);
+}
+
+.mobile-nav-link:hover {
+  color: var(--color-crimson);
+  transform: translateX(4px);
+}
+
+.mobile-nav-link.admin-highlight {
+  color: var(--color-gold-dark);
+  font-weight: 600;
+}
+
+.mobile-drawer-footer {
+  margin-top: auto;
+  padding-top: 20px;
+  border-top: 1px solid rgba(197, 160, 89, 0.3);
+  text-align: center;
+}
+
+/* --------------------------------------------------------------------------
+   13. Responsive Breakpoints
    -------------------------------------------------------------------------- */
 @media (max-width: 1024px) {
   .category-grid {
@@ -1372,20 +1483,26 @@
     display: none;
   }
   .mobile-menu-toggle {
-    display: block;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 44px;
+    min-height: 44px;
   }
   .product-detail-layout {
     grid-template-columns: 1fr;
-    padding: 24px;
+    padding: 24px 20px;
+    gap: 24px;
   }
   .category-grid {
     grid-template-columns: 1fr;
+    gap: 20px;
   }
   .category-card:last-child {
     grid-column: span 1;
   }
   .category-card {
-    height: 380px;
+    height: 360px;
   }
   .pillars-grid {
     grid-template-columns: 1fr;
@@ -1401,8 +1518,136 @@
   }
   .search-box-wrapper {
     max-width: 100%;
+    min-width: 100%;
   }
   .floating-wa-badge {
     display: none;
+  }
+  .filter-pills-row {
+    overflow-x: auto;
+    white-space: nowrap;
+    flex-wrap: nowrap;
+    padding-bottom: 8px;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .filter-pills-row::-webkit-scrollbar {
+    display: none;
+  }
+  .filter-pill {
+    flex-shrink: 0;
+    padding: 8px 18px;
+  }
+}
+
+@media (max-width: 540px) {
+  .site-header {
+    padding: 8px 0;
+  }
+  .brand-logo-img {
+    width: 42px;
+    height: 42px;
+  }
+  .brand-title {
+    font-size: 1.1rem;
+  }
+  .brand-tagline {
+    font-size: 0.58rem;
+  }
+  .header-wa-btn {
+    padding: 8px 12px;
+    font-size: 0.72rem;
+  }
+  .header-wa-btn span {
+    display: inline;
+  }
+  .hero-content {
+    padding: 44px 16px;
+  }
+  .hero-title {
+    font-size: 2.2rem;
+  }
+  .hero-title span {
+    font-size: 1.15rem;
+    letter-spacing: 0.12em;
+  }
+  .hero-subtitle {
+    font-size: 0.92rem;
+    line-height: 1.6;
+    margin-bottom: 24px;
+  }
+  .hero-cta-group {
+    flex-direction: column;
+    width: 100%;
+    max-width: 320px;
+    margin: 0 auto;
+    gap: 12px;
+  }
+  .hero-cta-group a {
+    width: 100%;
+    justify-content: center;
+    padding: 13px 20px;
+  }
+  .product-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  .product-quick-view-btn {
+    display: none;
+  }
+  .modal-backdrop {
+    padding: 10px;
+  }
+  .modal-dialog {
+    max-height: 94vh;
+  }
+  .product-detail-layout {
+    padding: 18px 14px;
+    gap: 18px;
+  }
+  .gallery-main-frame {
+    aspect-ratio: 4/5;
+    max-height: 42vh;
+  }
+  .gallery-thumb-item {
+    width: 58px;
+    height: 78px;
+  }
+  .detail-title {
+    font-size: 1.38rem;
+  }
+  .detail-price {
+    font-size: 1.55rem;
+  }
+  .btn-detail-whatsapp {
+    padding: 14px;
+    font-size: 0.82rem;
+  }
+  .gallery-grid-layout {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .gallery-grid-item:first-child {
+    grid-column: span 1;
+  }
+  .gallery-grid-item {
+    height: 280px;
+  }
+  .location-info-card {
+    padding: 22px 18px;
+  }
+  .map-frame-wrapper {
+    height: 280px;
+  }
+  .floating-wa-btn {
+    bottom: 16px;
+    right: 16px;
+    width: 54px;
+    height: 54px;
+  }
+  .footer-bottom-bar {
+    flex-direction: column;
+    text-align: center;
+    gap: 14px;
   }
 }
