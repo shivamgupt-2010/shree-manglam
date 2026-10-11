@@ -7,4 +7,4 @@ Allow: /js/
 Disallow: /admin.html
 Disallow: /admin
 
-Sitemap: https://shreemanglam.com/sitemap.xml
+Sitemap: https://shree-manglam.netlify.app/sitemap.xml
