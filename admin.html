@@ -142,10 +142,11 @@
           <h2 class="admin-card-title">Editorial Lookbook & Reels</h2>
           <p style="font-size: 0.82rem; color: var(--color-text-muted); margin-top: 2px;">Curate high-fashion photos and Instagram Reel embeds for the public gallery.</p>
         </div>
-
-        <button class="btn-admin-action btn-admin-primary" id="addGalleryItemBtn">
-          <span>+ Add Lookbook Item</span>
-        </button>
+        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+          <button type="button" class="btn-admin-action btn-admin-primary" id="openGalleryModalBtn" style="display: inline-flex; align-items: center; gap: 8px;">
+            <span>📸 + Add to Lookbook (Files & Reels)</span>
+          </button>
+        </div>
       </div>
 
       <div class="table-responsive">
@@ -166,43 +167,40 @@
       </div>
     </section>
 
-    <!-- SHIV Centralized Database (BaaS) Integration -->
-    <section class="admin-card" id="shivDbSection">
+    <!-- Firebase Database (Firestore) Integration -->
+    <section class="admin-card" id="firebaseSection">
       <div class="admin-card-header">
         <div>
           <div style="display: flex; align-items: center; gap: 10px;">
-            <h2 class="admin-card-title">SHIV Database & Auth Integration</h2>
-            <span id="shivDbStatusBadge" class="status-pill draft" style="font-size: 0.7rem;">Checking...</span>
+            <h2 class="admin-card-title">Firebase Database (Firestore)</h2>
+            <span id="firebaseStatusBadge" class="status-pill draft" style="font-size: 0.7rem;">Connecting...</span>
           </div>
-          <p style="font-size: 0.82rem; color: var(--color-text-muted); margin-top: 2px;">Connect and synchronize products, media, and customer leads with the centralized SHIV BaaS backend.</p>
+          <p style="font-size: 0.82rem; color: var(--color-text-muted); margin-top: 2px;">Connected to Firebase project <strong style="color: var(--color-crimson);">jeeprep-a5262</strong>. All products, gallery and settings sync in real-time to Firestore. Images upload directly to Firebase Storage.</p>
         </div>
-
         <div style="display: flex; gap: 10px;">
-          <button class="btn-admin-action btn-admin-outline" id="testShivDbBtn" style="color: var(--color-text-primary); border-color: var(--color-gold);">
-            <span>Test Connection</span>
+          <button class="btn-admin-action btn-admin-outline" id="firebasePingBtn" style="color: var(--color-text-primary); border-color: var(--color-gold);">
+            <span>Check Status</span>
           </button>
-          <button class="btn-admin-action btn-admin-primary" id="syncShivDbBtn">
-            <span>Sync to SHIV DB</span>
-          </button>
-        </div>
-      </div>
-
-      <div style="display: grid; grid-template-columns: 1fr 1fr auto; gap: 16px; align-items: flex-end;">
-        <div>
-          <label class="form-label">SHIV Database Endpoint URL</label>
-          <input type="text" id="shivDbEndpointInput" class="form-input" value="https://shiv-database.onrender.com" placeholder="https://shiv-database.onrender.com or http://localhost:8000" />
-        </div>
-        <div>
-          <label class="form-label">Project / API Key (Optional)</label>
-          <input type="text" id="shivDbApiKeyInput" class="form-input" placeholder="Enter SHIV API Key (e.g. shiv_live_...)" />
-        </div>
-        <div>
-          <button class="btn-admin-action btn-admin-outline" id="saveShivDbConfigBtn" style="color: var(--color-text-primary); border-color: var(--color-gold); height: 42px;">
-            <span>Save Settings</span>
+          <button class="btn-admin-action btn-admin-primary" id="firebaseSyncBtn">
+            <span>Force Full Sync</span>
           </button>
         </div>
       </div>
-      <div id="shivDbLogMsg" style="font-size: 0.78rem; color: var(--color-text-muted); margin-top: 12px;"></div>
+      <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 6px;">
+        <div style="background: rgba(197,160,89,0.06); border: 1px solid rgba(197,160,89,0.25); border-radius: var(--radius-xs); padding: 12px 14px;">
+          <div style="font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-text-muted); margin-bottom: 4px;">Project ID</div>
+          <div style="font-family: monospace; font-size: 0.85rem; color: var(--color-crimson); font-weight: 600;">jeeprep-a5262</div>
+        </div>
+        <div style="background: rgba(197,160,89,0.06); border: 1px solid rgba(197,160,89,0.25); border-radius: var(--radius-xs); padding: 12px 14px;">
+          <div style="font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-text-muted); margin-bottom: 4px;">Storage Bucket</div>
+          <div style="font-family: monospace; font-size: 0.82rem; color: var(--color-text-secondary); font-weight: 600;">jeeprep-a5262.firebasestorage.app</div>
+        </div>
+        <div style="background: rgba(197,160,89,0.06); border: 1px solid rgba(197,160,89,0.25); border-radius: var(--radius-xs); padding: 12px 14px;">
+          <div style="font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-text-muted); margin-bottom: 4px;">Offline Cache</div>
+          <div style="font-size: 0.85rem; color: #25a244; font-weight: 600;">Enabled (Auto-sync)</div>
+        </div>
+      </div>
+      <div id="firebaseLogMsg" style="font-size: 0.78rem; color: var(--color-text-muted); margin-top: 12px; padding: 8px 0; border-top: 1px solid rgba(197,160,89,0.15);">Initializing Firebase connection...</div>
     </section>
 
     <!-- System Backups & Factory Reset -->
@@ -395,15 +393,15 @@
               <label class="form-label">Product Photos (Upload Files & Live Preview)</label>
               <div class="image-uploader-box">
                 <!-- Direct File Upload & Drag-and-Drop Area -->
-                <div class="image-dropzone" id="imageDropzone">
-                  <input type="file" id="productFileInput" accept="image/png, image/jpeg, image/webp, image/jpg" multiple style="display: none;" />
-                  <div class="dropzone-content">
+                <div class="image-dropzone" id="imageDropzone" style="position: relative; overflow: hidden; cursor: pointer;">
+                  <input type="file" id="productFileInput" accept="image/*" multiple style="position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; z-index: 10;" title="Click or tap to upload photos" />
+                  <div class="dropzone-content" style="pointer-events: none;">
                     <span class="dropzone-icon">📷</span>
                     <div class="dropzone-text">
-                      <strong>Click to Upload Photos</strong> or drag & drop files here
+                      <strong>Click or Tap to Upload Photos</strong> or drag & drop files here
                     </div>
-                    <div class="dropzone-subtext">Directly select photos from your device, phone, or computer (JPG, PNG, WEBP)</div>
-                    <button type="button" class="btn-luxury-primary" id="triggerFileSelectBtn" style="margin-top: 10px; padding: 8px 20px; font-size: 0.76rem; pointer-events: none;">Browse Files</button>
+                    <div class="dropzone-subtext">Directly select photos from your device, phone camera, or computer (JPG, PNG, WEBP)</div>
+                    <button type="button" class="btn-luxury-primary" id="triggerFileSelectBtn" style="margin-top: 10px; padding: 8px 20px; font-size: 0.76rem;">Browse Files / Camera</button>
                   </div>
                 </div>
 
@@ -412,7 +410,7 @@
                   <input type="text" id="imageUrlInput" class="form-input" placeholder="Or enter image URL / local path (e.g. assets/category-sarees.jpg)" />
                   <button type="button" id="addImageUrlBtn" class="btn-luxury-outline" style="color: var(--color-crimson); border-color: var(--color-gold); padding: 8px 18px; font-size: 0.75rem; white-space: nowrap;">+ Add URL</button>
                 </div>
-                <div id="uploadStatusText" style="font-size: 0.78rem; color: var(--color-gold-dark); margin-top: 8px; font-weight: 500; display: none;"></div>
+                <div id="uploadStatusText" style="font-size: 0.8rem; color: var(--color-gold-dark); margin-top: 8px; font-weight: 600; display: none;"></div>
 
                 <!-- Image Previews Container -->
                 <div class="image-preview-strip" id="imagePreviewsContainer">
@@ -466,8 +464,102 @@
     </div>
   </div>
 
+  <!-- Editorial Lookbook Modal (Add / Edit Lookbook Item with File Upload) -->
+  <div class="modal-backdrop" id="galleryModal" role="dialog" aria-modal="true">
+    <div class="modal-dialog" style="max-width: 580px;">
+      <div class="modal-header">
+        <h3 class="modal-title" id="galleryModalTitle">Add to Editorial Lookbook</h3>
+        <button type="button" class="modal-close" id="galleryModalCloseBtn">×</button>
+      </div>
+
+      <form id="galleryForm" class="modal-body" style="padding: 24px;">
+        <!-- Media Upload Area -->
+        <div class="form-group-full">
+          <label class="form-label">Lookbook Photo (Choose File or Enter URL)</label>
+          <div class="image-uploader-box">
+            <!-- Dropzone & File Select -->
+            <div class="image-dropzone" id="galleryDropzone" style="position: relative; overflow: hidden; padding: 22px 16px; cursor: pointer;">
+              <input type="file" id="galleryFileInput" accept="image/*" style="position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; z-index: 10;" title="Select or drag photo" />
+              <div class="dropzone-content" style="pointer-events: none;">
+                <span class="dropzone-icon" style="font-size: 1.8rem; margin-bottom: 4px;">📸</span>
+                <div class="dropzone-text" style="font-size: 0.88rem;">
+                  <strong>Click or Tap to Upload Photo</strong> or drag image here
+                </div>
+                <div class="dropzone-subtext" style="font-size: 0.74rem;">Select picture from device, phone camera, or computer (JPG, PNG, WEBP)</div>
+                <button type="button" class="btn-luxury-primary" style="margin-top: 8px; padding: 6px 16px; font-size: 0.74rem;">Browse Device Files</button>
+              </div>
+            </div>
+
+            <div id="galleryUploadStatus" style="font-size: 0.8rem; color: var(--color-gold-dark); margin-top: 8px; font-weight: 600; display: none;"></div>
+
+            <!-- Image URL Fallback -->
+            <div style="display: flex; gap: 8px; margin-top: 12px;">
+              <input type="text" id="galleryImageUrlInput" class="form-input" placeholder="Or paste image URL (e.g. assets/hero-banner.jpg)" style="font-size: 0.82rem;" />
+              <button type="button" id="galleryUseUrlBtn" class="btn-luxury-outline" style="font-size: 0.74rem; padding: 6px 14px; white-space: nowrap; color: var(--color-crimson); border-color: var(--color-gold);">Set URL</button>
+            </div>
+
+            <!-- Live Photo Preview -->
+            <div id="galleryPreviewContainer" style="margin-top: 12px; display: none;">
+              <div style="font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-text-muted); margin-bottom: 6px;">Live Photo Preview</div>
+              <div style="position: relative; width: 140px; height: 190px; border-radius: var(--radius-xs); overflow: hidden; border: 2px solid var(--color-gold); box-shadow: 0 4px 14px rgba(0,0,0,0.15);">
+                <img id="galleryPreviewImg" src="" alt="Lookbook Preview" style="width: 100%; height: 100%; object-fit: cover;" />
+                <button type="button" id="galleryRemoveImgBtn" title="Remove Photo" style="position: absolute; top: 4px; right: 4px; width: 22px; height: 22px; border-radius: 50%; background: rgba(0,0,0,0.65); color: #fff; border: none; cursor: pointer; font-size: 0.8rem; display: flex; align-items: center; justify-content: center;">×</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Title -->
+        <div class="form-group-full" style="margin-top: 14px;">
+          <label for="galleryTitleInput" class="form-label">Lookbook Title / Caption</label>
+          <input type="text" id="galleryTitleInput" class="form-input" placeholder="e.g. Royal Rajputi Swarn Poshak, Heritage Bridal Look" required />
+        </div>
+
+        <!-- Collection Tag -->
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 14px;">
+          <div>
+            <label for="galleryTagSelect" class="form-label">Collection Tag</label>
+            <select id="galleryTagSelect" class="form-select">
+              <option value="Bridal Couture">Bridal Couture</option>
+              <option value="Royal Poshak">Royal Poshak</option>
+              <option value="Banarasi Sarees">Banarasi Sarees</option>
+              <option value="Festive Edit">Festive Edit</option>
+              <option value="Heritage Velvet">Heritage Velvet</option>
+              <option value="Editorial">Editorial</option>
+            </select>
+          </div>
+          <div>
+            <label for="galleryCustomTag" class="form-label">Or Custom Tag</label>
+            <input type="text" id="galleryCustomTag" class="form-input" placeholder="e.g. Navratri Special" />
+          </div>
+        </div>
+
+        <!-- Instagram Reel Link -->
+        <div class="form-group-full" style="margin-top: 14px;">
+          <label for="galleryReelUrlInput" class="form-label">Instagram Reel Link (Optional)</label>
+          <input type="url" id="galleryReelUrlInput" class="form-input" placeholder="https://www.instagram.com/reel/..." />
+          <span style="font-size: 0.72rem; color: var(--color-text-muted); display: block; margin-top: 4px;">If provided, storefront visitors can tap to watch the full Instagram Reel directly.</span>
+        </div>
+
+        <!-- Modal Footer -->
+        <div style="margin-top: 24px; padding-top: 16px; border-top: 1px solid rgba(197,160,89,0.3); display: flex; justify-content: flex-end; gap: 12px;">
+          <button type="button" class="btn-admin-action btn-admin-outline" id="galleryModalCancelBtn" style="color: var(--color-text-primary); border-color: var(--color-gold);">Cancel</button>
+          <button type="submit" class="btn-luxury-primary" id="galleryModalSaveBtn" style="padding: 10px 24px; font-size: 0.82rem;">Publish to Lookbook</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Firebase SDK (compat v9) -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-storage-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-analytics-compat.js"></script>
+
   <!-- Scripts -->
   <script src="js/data.js"></script>
+  <script src="js/firebase.js"></script>
   <script src="js/store.js"></script>
   <script src="js/festivals.js"></script>
   <script src="js/admin.js"></script>

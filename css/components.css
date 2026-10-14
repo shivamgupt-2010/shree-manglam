@@ -1348,15 +1348,15 @@
 .mobile-drawer-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(24, 21, 20, 0.78);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  background: rgba(24, 21, 20, 0.82);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   z-index: 2500;
   display: flex;
   justify-content: flex-end;
   opacity: 0;
   visibility: hidden;
-  transition: opacity 0.3s ease, visibility 0.3s ease;
+  transition: opacity 0.32s ease, visibility 0.32s ease;
 }
 
 .mobile-drawer-overlay.open {
@@ -1365,17 +1365,16 @@
 }
 
 .mobile-drawer-panel {
-  background: var(--color-surface-white);
-  width: 84%;
-  max-width: 320px;
+  background: #faf7f2;
+  width: 88%;
+  max-width: 340px;
   height: 100%;
-  padding: 28px 22px;
   display: flex;
   flex-direction: column;
-  gap: 18px;
-  box-shadow: -8px 0 28px rgba(0, 0, 0, 0.35);
+  gap: 0;
+  box-shadow: -12px 0 40px rgba(0, 0, 0, 0.4);
   transform: translateX(100%);
-  transition: transform 0.32s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform 0.36s cubic-bezier(0.16, 1, 0.3, 1);
   overflow-y: auto;
 }
 
@@ -1383,74 +1382,166 @@
   transform: translateX(0);
 }
 
+/* Brand header inside drawer */
 .mobile-drawer-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding-bottom: 16px;
-  border-bottom: 1px solid rgba(197, 160, 89, 0.3);
+  padding: 20px 22px;
+  background: var(--color-crimson-deep);
+  flex-shrink: 0;
 }
 
-.mobile-drawer-title {
+.mobile-drawer-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.mobile-drawer-logo {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid rgba(197, 160, 89, 0.6);
+  flex-shrink: 0;
+}
+
+.mobile-drawer-brand-name {
   font-family: var(--font-serif-royal);
-  font-size: 1.15rem;
-  color: var(--color-crimson);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-gold-light);
   letter-spacing: 0.1em;
   text-transform: uppercase;
+  line-height: 1.2;
+}
+
+.mobile-drawer-brand-tagline {
+  font-size: 0.62rem;
+  letter-spacing: 0.18em;
+  color: rgba(255, 255, 255, 0.65);
+  text-transform: uppercase;
+  margin-top: 2px;
 }
 
 .mobile-drawer-close-btn {
-  width: 38px;
-  height: 38px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
-  background: var(--color-ivory-warm);
-  border: 1px solid rgba(197, 160, 89, 0.3);
-  color: var(--color-crimson);
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  color: rgba(255, 255, 255, 0.9);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.2rem;
   cursor: pointer;
   transition: all var(--transition-fast);
+  flex-shrink: 0;
 }
 
 .mobile-drawer-close-btn:hover {
-  background: var(--color-crimson);
+  background: rgba(255, 255, 255, 0.22);
   color: #fff;
 }
 
+/* Nav links */
 .mobile-drawer-nav {
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  padding: 12px 0;
+  flex: 1;
+  overflow-y: auto;
 }
 
 .mobile-nav-link {
-  font-size: 0.92rem;
-  letter-spacing: 0.12em;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-size: 0.88rem;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--color-text-primary);
-  padding: 8px 0;
-  border-bottom: 1px solid rgba(197, 160, 89, 0.15);
+  padding: 15px 24px;
+  border-bottom: 1px solid rgba(197, 160, 89, 0.12);
   font-weight: 500;
-  transition: color var(--transition-fast), transform var(--transition-fast);
+  transition: background var(--transition-fast), color var(--transition-fast), padding-left var(--transition-fast);
+  min-height: 52px; /* Generous touch target */
 }
 
 .mobile-nav-link:hover {
+  background: rgba(197, 160, 89, 0.08);
   color: var(--color-crimson);
-  transform: translateX(4px);
+  padding-left: 30px;
 }
 
-.mobile-nav-link.admin-highlight {
+.mobile-nav-icon {
+  font-size: 1.15rem;
+  flex-shrink: 0;
+  width: 24px;
+  text-align: center;
+}
+
+.mobile-nav-festive {
+  background: linear-gradient(90deg, rgba(197, 160, 89, 0.08) 0%, transparent 100%);
   color: var(--color-gold-dark);
   font-weight: 600;
 }
 
+.mobile-nav-festive:hover {
+  background: rgba(197, 160, 89, 0.15);
+  color: var(--color-crimson);
+}
+
+/* Footer with WhatsApp CTA */
 .mobile-drawer-footer {
-  margin-top: auto;
-  padding-top: 20px;
-  border-top: 1px solid rgba(197, 160, 89, 0.3);
+  padding: 20px 22px 28px;
+  border-top: 1px solid rgba(197, 160, 89, 0.25);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  flex-shrink: 0;
+  background: #f5f1ea;
+}
+
+.mobile-drawer-wa-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: linear-gradient(135deg, #25d366 0%, #128c7e 100%);
+  color: #fff;
+  font-family: var(--font-sans);
+  font-size: 0.88rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-weight: 700;
+  padding: 14px 22px;
+  border-radius: var(--radius-xs);
+  box-shadow: 0 6px 18px rgba(37, 211, 102, 0.3);
+  transition: all var(--transition-fast);
+  text-decoration: none;
+}
+
+.mobile-drawer-wa-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(37, 211, 102, 0.4);
+}
+
+.mobile-drawer-admin-link {
+  display: block;
   text-align: center;
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-gold-dark);
+  text-decoration: underline;
+  padding: 4px 0;
+  transition: color var(--transition-fast);
+}
+
+.mobile-drawer-admin-link:hover {
+  color: var(--color-crimson);
 }
 
 /* --------------------------------------------------------------------------
@@ -2159,3 +2250,60 @@
   text-decoration: none;
 }
 
+/* --------------------------------------------------------------------------
+   16. Extra Mobile Optimizations (480px mid-phone)
+   -------------------------------------------------------------------------- */
+@media (min-width: 421px) and (max-width: 540px) {
+  .product-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+  }
+  .product-card-image {
+    aspect-ratio: 3/4;
+  }
+  .product-card-name {
+    font-size: 0.82rem;
+  }
+  .product-card-price {
+    font-size: 1rem;
+  }
+}
+
+/* Very small phones: hide WA button text, show icon only */
+@media (max-width: 360px) {
+  .header-wa-btn .btn-text {
+    display: none;
+  }
+  .brand-title {
+    font-size: 0.95rem;
+  }
+  .brand-tagline {
+    display: none;
+  }
+  .hero-title {
+    font-size: 1.85rem;
+  }
+}
+
+/* Safe area insets for notch phones (iPhone X+) */
+@supports (padding: env(safe-area-inset-bottom)) {
+  .site-header {
+    padding-top: env(safe-area-inset-top, 0);
+  }
+  .mobile-drawer-footer {
+    padding-bottom: max(28px, env(safe-area-inset-bottom));
+  }
+  .floating-wa-btn {
+    bottom: max(16px, env(safe-area-inset-bottom));
+  }
+}
+
+/* Smooth scrolling globally + better tap highlight */
+html {
+  scroll-behavior: smooth;
+  -webkit-tap-highlight-color: rgba(197, 160, 89, 0.15);
+}
+
+a, button {
+  -webkit-tap-highlight-color: transparent;
+}

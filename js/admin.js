@@ -23,7 +23,23 @@ const AdminApp = {
     this.renderFestivalEngineInfo();
     this.bindFormEvents();
     this.bindBackupEvents();
-    this.bindShivDbEvents();
+    this.bindFirebaseEvents();
+
+    // Initialize Firebase and reload data from Firestore
+    if (typeof FirebaseService !== 'undefined') {
+      FirebaseService.init().then(async (ok) => {
+        if (ok) {
+          const products = await Store.loadProducts();
+          if (products) {
+            this.renderMetrics();
+            this.renderProductsTable();
+          }
+          const gallery = await Store.loadGallery();
+          if (gallery) this.renderGalleryTable();
+        }
+        this.updateFirebaseStatusBadge();
+      });
+    }
   },
 
   // 1. Authentication Gate
@@ -191,29 +207,49 @@ const AdminApp = {
 
     const handleFiles = async (files) => {
       if (!files || files.length === 0) return;
+      const fileArr = Array.from(files).filter(f => f.type.startsWith('image/') || /\.(jpg|jpeg|png|webp|avif|heic|gif)$/i.test(f.name));
+      if (fileArr.length === 0) {
+        alert('Please select valid image files (JPG, PNG, WEBP).');
+        return;
+      }
       if (statusText) {
         statusText.style.display = 'block';
-        statusText.textContent = `Optimizing ${files.length} photo(s)...`;
+        statusText.style.color = 'var(--color-gold-dark)';
+        statusText.textContent = `Processing ${fileArr.length} photo(s)...`;
       }
-      for (const file of Array.from(files)) {
-        if (!file.type.startsWith('image/')) continue;
+      for (let i = 0; i < fileArr.length; i++) {
+        const file = fileArr[i];
+        if (statusText) statusText.textContent = `Adding photo ${i + 1} of ${fileArr.length} (${file.name})...`;
         try {
-          const compressed = await this.compressAndLoadImage(file);
-          this.activeImagesList.push(compressed);
+          const productId = this.currentEditId || 'new-' + Date.now();
+          const url = await Store.uploadProductImage(file, productId, (pct) => {
+            if (statusText) statusText.textContent = `Uploading ${file.name}: ${pct}%...`;
+          });
+          if (url) {
+            this.activeImagesList.push(url);
+            this.renderImagePreviews();
+          }
         } catch (err) {
-          console.error('Failed to load image', file.name, err);
+          console.error('[Admin] Error uploading photo:', err);
         }
       }
       if (statusText) {
-        statusText.textContent = `✓ ${files.length} photo(s) added successfully!`;
-        setTimeout(() => { statusText.style.display = 'none'; }, 2800);
+        statusText.textContent = `✓ ${fileArr.length} photo(s) added successfully!`;
+        statusText.style.color = '#25a244';
+        setTimeout(() => {
+          statusText.style.display = 'none';
+          statusText.style.color = '';
+        }, 3500);
       }
       this.renderImagePreviews();
       if (fileInput) fileInput.value = '';
     };
 
-    dropzone?.addEventListener('click', () => {
-      fileInput?.click();
+    dropzone?.addEventListener('click', (e) => {
+      // If direct target is not the file input itself, trigger it
+      if (e.target !== fileInput) {
+        fileInput?.click();
+      }
     });
 
     fileInput?.addEventListener('change', (e) => {
@@ -451,14 +487,116 @@ const AdminApp = {
       });
     });
 
-    // Add Lookbook item
-    const addGalleryBtn = document.getElementById('addGalleryItemBtn');
-    addGalleryBtn?.addEventListener('click', () => {
-      const title = prompt('Enter Lookbook Item Title:');
-      if (!title) return;
-      const tag = prompt('Enter Collection Tag (e.g., Bridal, Festive, Poshak):') || 'Couture';
-      const imageUrl = prompt('Enter Image URL (or path):') || 'assets/hero-banner.jpg';
-      const reelUrl = prompt('Optional Instagram Reel URL:') || '';
+    // Lookbook Modal & File Upload Manager
+    this.activeGalleryImage = null;
+    const galleryModal = document.getElementById('galleryModal');
+    const openGalleryModalBtn = document.getElementById('openGalleryModalBtn');
+    const closeGalleryModalBtn = document.getElementById('galleryModalCloseBtn');
+    const cancelGalleryModalBtn = document.getElementById('galleryModalCancelBtn');
+    const galleryForm = document.getElementById('galleryForm');
+    const galleryFileInput = document.getElementById('galleryFileInput');
+    const galleryDropzone = document.getElementById('galleryDropzone');
+    const galleryStatus = document.getElementById('galleryUploadStatus');
+    const galleryPreviewContainer = document.getElementById('galleryPreviewContainer');
+    const galleryPreviewImg = document.getElementById('galleryPreviewImg');
+    const galleryRemoveImgBtn = document.getElementById('galleryRemoveImgBtn');
+    const galleryImageUrlInput = document.getElementById('galleryImageUrlInput');
+    const galleryUseUrlBtn = document.getElementById('galleryUseUrlBtn');
+
+    const openGalleryModal = () => {
+      galleryForm?.reset();
+      this.activeGalleryImage = null;
+      if (galleryPreviewContainer) galleryPreviewContainer.style.display = 'none';
+      if (galleryStatus) galleryStatus.style.display = 'none';
+      galleryModal?.classList.add('open');
+    };
+
+    const closeGalleryModal = () => {
+      galleryModal?.classList.remove('open');
+      this.activeGalleryImage = null;
+    };
+
+    openGalleryModalBtn?.addEventListener('click', openGalleryModal);
+    closeGalleryModalBtn?.addEventListener('click', closeGalleryModal);
+    cancelGalleryModalBtn?.addEventListener('click', closeGalleryModal);
+
+    // Lookbook File Selection & Upload
+    const handleGalleryFile = async (file) => {
+      if (!file) return;
+      if (galleryStatus) {
+        galleryStatus.style.display = 'block';
+        galleryStatus.style.color = 'var(--color-gold-dark)';
+        galleryStatus.textContent = `Optimizing & uploading ${file.name}...`;
+      }
+      try {
+        const url = await Store.uploadGalleryImage(file, (pct) => {
+          if (galleryStatus) galleryStatus.textContent = `Uploading photo: ${pct}%...`;
+        });
+        this.activeGalleryImage = url;
+        if (galleryPreviewImg) galleryPreviewImg.src = url;
+        if (galleryPreviewContainer) galleryPreviewContainer.style.display = 'block';
+        if (galleryStatus) {
+          galleryStatus.textContent = '✓ Photo ready for Lookbook!';
+          galleryStatus.style.color = '#25a244';
+        }
+      } catch (err) {
+        console.error('Gallery file upload error:', err);
+        if (galleryStatus) {
+          galleryStatus.textContent = 'Upload failed. Please try another image.';
+          galleryStatus.style.color = 'var(--color-crimson)';
+        }
+      }
+    };
+
+    galleryFileInput?.addEventListener('change', (e) => {
+      const file = e.target.files && e.target.files[0];
+      if (file) handleGalleryFile(file);
+    });
+
+    galleryDropzone?.addEventListener('click', (e) => {
+      if (e.target !== galleryFileInput) galleryFileInput?.click();
+    });
+
+    // Set Image URL manually
+    galleryUseUrlBtn?.addEventListener('click', () => {
+      const url = galleryImageUrlInput?.value.trim();
+      if (!url) {
+        alert('Please enter a valid image URL or relative path.');
+        return;
+      }
+      this.activeGalleryImage = url;
+      if (galleryPreviewImg) galleryPreviewImg.src = url;
+      if (galleryPreviewContainer) galleryPreviewContainer.style.display = 'block';
+      if (galleryStatus) {
+        galleryStatus.style.display = 'block';
+        galleryStatus.textContent = '✓ Image URL linked!';
+        galleryStatus.style.color = '#25a244';
+      }
+    });
+
+    // Remove Preview
+    galleryRemoveImgBtn?.addEventListener('click', () => {
+      this.activeGalleryImage = null;
+      if (galleryPreviewContainer) galleryPreviewContainer.style.display = 'none';
+      if (galleryStatus) galleryStatus.style.display = 'none';
+      if (galleryFileInput) galleryFileInput.value = '';
+      if (galleryImageUrlInput) galleryImageUrlInput.value = '';
+    });
+
+    // Save Gallery Form
+    galleryForm?.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const title = document.getElementById('galleryTitleInput')?.value.trim();
+      const selectTag = document.getElementById('galleryTagSelect')?.value;
+      const customTag = document.getElementById('galleryCustomTag')?.value.trim();
+      const reelUrl = document.getElementById('galleryReelUrlInput')?.value.trim() || '';
+      const tag = customTag || selectTag || 'Couture';
+      const imageUrl = this.activeGalleryImage || galleryImageUrlInput?.value.trim() || 'assets/hero-banner.jpg';
+
+      if (!title) {
+        alert('Please enter a Lookbook title.');
+        return;
+      }
 
       Store.addGalleryItem({
         title,
@@ -468,6 +606,7 @@ const AdminApp = {
         type: reelUrl ? 'REEL' : 'LOOKBOOK'
       });
 
+      closeGalleryModal();
       this.renderMetrics();
       this.renderGalleryTable();
     });
@@ -514,66 +653,46 @@ const AdminApp = {
     });
   },
 
-  // 7. SHIV Database (BaaS) Event Handlers
-  bindShivDbEvents() {
-    const statusBadge = document.getElementById('shivDbStatusBadge');
-    const endpointInput = document.getElementById('shivDbEndpointInput');
-    const apiKeyInput = document.getElementById('shivDbApiKeyInput');
-    const saveBtn = document.getElementById('saveShivDbConfigBtn');
-    const testBtn = document.getElementById('testShivDbBtn');
-    const syncBtn = document.getElementById('syncShivDbBtn');
-    const logMsg = document.getElementById('shivDbLogMsg');
-
-    const cfg = Store.shivDb.getConfig();
-    if (endpointInput) endpointInput.value = cfg.endpoint || 'https://shiv-database.onrender.com';
-    if (apiKeyInput) apiKeyInput.value = cfg.apiKey || '';
-
-    // Check health on load
-    const runHealthCheck = async () => {
-      if (!statusBadge) return;
-      statusBadge.textContent = 'Pinging SHIV DB...';
-      statusBadge.className = 'status-pill draft';
-      const health = await Store.shivDb.checkHealth();
-      if (health.online) {
-        statusBadge.textContent = `🟢 Connected (${health.url})`;
-        statusBadge.className = 'status-pill published';
-        if (logMsg) logMsg.textContent = `Connected to ${health.service} at ${health.url}`;
-      } else {
-        statusBadge.textContent = '⚪ Offline / Standalone';
-        statusBadge.className = 'status-pill draft';
-        if (logMsg) logMsg.textContent = 'SHIV Database is currently offline. Operating in standalone high-speed local mode.';
-      }
-    };
-
-    runHealthCheck();
-
-    saveBtn?.addEventListener('click', () => {
-      const endpoint = endpointInput?.value.trim() || 'https://shiv-database.onrender.com';
-      const apiKey = apiKeyInput?.value.trim() || '';
-      Store.shivDb.saveConfig({
-        enabled: true,
-        endpoint,
-        localFallback: 'http://localhost:8000',
-        projectId: 'shree-manglam',
-        apiKey
-      });
-      if (logMsg) logMsg.textContent = 'SHIV Database configuration saved successfully.';
-      runHealthCheck();
-    });
-
-    testBtn?.addEventListener('click', () => {
-      runHealthCheck();
-    });
-
+  // 7. Firebase Status & Sync Panel
+  bindFirebaseEvents() {
+    const pingBtn = document.getElementById('firebasePingBtn');
+    const syncBtn = document.getElementById('firebaseSyncBtn');
+    pingBtn?.addEventListener('click', () => this.updateFirebaseStatusBadge());
     syncBtn?.addEventListener('click', async () => {
-      if (logMsg) logMsg.textContent = 'Initiating full sync to SHIV Database...';
-      const res = await Store.shivDb.syncAllProducts();
-      if (res.success) {
-        if (logMsg) logMsg.textContent = `Successfully synced ${res.count} of ${res.total} products to ${res.endpoint}!`;
-        alert(`Success! Synced ${res.count} items to SHIV Database.`);
+      const logMsg = document.getElementById('firebaseLogMsg');
+      if (logMsg) logMsg.textContent = 'Syncing all products to Firebase...';
+      const products = Store.getProducts();
+      const gallery  = Store.getGallery();
+      let count = 0;
+      for (const p of products) {
+        const ok = await FirebaseService.saveProduct(p);
+        if (ok) count++;
+      }
+      for (const g of gallery) {
+        await FirebaseService.saveGalleryItem(g);
+      }
+      if (logMsg) logMsg.textContent = `✅ Synced ${count}/${products.length} products and ${gallery.length} gallery items to Firebase Firestore!`;
+    });
+  },
+
+  updateFirebaseStatusBadge() {
+    const badge = document.getElementById('firebaseStatusBadge');
+    const logMsg = document.getElementById('firebaseLogMsg');
+    if (!badge) return;
+    if (typeof FirebaseService === 'undefined' || !FirebaseService.isReady) {
+      badge.textContent = '⚪ Firebase Initializing...';
+      badge.className = 'status-pill draft';
+      return;
+    }
+    FirebaseService.checkHealth().then(h => {
+      if (h.online) {
+        badge.textContent = '🟢 Firebase Connected';
+        badge.className = 'status-pill published';
+        if (logMsg) logMsg.textContent = `Connected to Firebase project: ${h.projectId || 'jeeprep-a5262'}. All data syncing in real-time.`;
       } else {
-        if (logMsg) logMsg.textContent = `Sync failed: ${res.message}. Ensure SHIV Database is running.`;
-        alert(`Could not sync: ${res.message}`);
+        badge.textContent = '🟡 Firebase Offline (Local Cache Active)';
+        badge.className = 'status-pill draft';
+        if (logMsg) logMsg.textContent = `Firebase: ${h.reason}. Data is cached locally and will sync when connection resumes.`;
       }
     });
   },

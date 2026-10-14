@@ -28,6 +28,23 @@ const App = {
     this.bindModals();
     this.bindFloatingConcierge();
     this.handleInitialHash();
+
+    // Initialize Firebase and refresh data from Firestore
+    if (typeof FirebaseService !== 'undefined') {
+      FirebaseService.init().then(async (ok) => {
+        if (ok) {
+          const products = await Store.loadProducts();
+          if (products && products.length > 0) {
+            this.renderCategoryCounts();
+            this.renderCatalogue();
+          }
+          const gallery = await Store.loadGallery();
+          if (gallery && gallery.length > 0) {
+            this.renderLookbook();
+          }
+        }
+      });
+    }
   },
 
   // 1. Header & Mobile Menu
