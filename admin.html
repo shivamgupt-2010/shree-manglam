@@ -54,7 +54,7 @@
       <a href="/" target="_blank" class="btn-admin-action btn-admin-outline">
         <span>View Live Storefront</span> ↗
       </a>
-      <button class="btn-admin-action btn-admin-primary" id="addNewProductBtn">
+      <button class="btn-admin-action btn-admin-primary" id="addNewProductBtn" onclick="AdminApp.openAddModal()">
         <span>+ Add Couture Piece</span>
       </button>
       <button class="btn-admin-action btn-admin-outline" id="adminLogoutBtn">Logout</button>
@@ -143,7 +143,7 @@
           <p style="font-size: 0.82rem; color: var(--color-text-muted); margin-top: 2px;">Curate high-fashion photos and Instagram Reel embeds for the public gallery.</p>
         </div>
         <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-          <button type="button" class="btn-admin-action btn-admin-primary" id="openGalleryModalBtn" style="display: inline-flex; align-items: center; gap: 8px;">
+          <button type="button" class="btn-admin-action btn-admin-primary" id="openGalleryModalBtn" onclick="AdminApp.openGalleryModal()" style="display: inline-flex; align-items: center; gap: 8px; cursor: pointer;">
             <span>📸 + Add to Lookbook (Files & Reels)</span>
           </button>
         </div>
@@ -469,7 +469,7 @@
     <div class="modal-dialog" style="max-width: 580px;">
       <div class="modal-header">
         <h3 class="modal-title" id="galleryModalTitle">Add to Editorial Lookbook</h3>
-        <button type="button" class="modal-close" id="galleryModalCloseBtn">×</button>
+        <button type="button" class="modal-close-btn" id="galleryModalCloseBtn" aria-label="Close dialog">×</button>
       </div>
 
       <form id="galleryForm" class="modal-body" style="padding: 24px;">

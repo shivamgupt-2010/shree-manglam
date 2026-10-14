@@ -22,6 +22,7 @@ const AdminApp = {
     this.renderGalleryTable();
     this.renderFestivalEngineInfo();
     this.bindFormEvents();
+    this.bindGalleryEvents();
     this.bindBackupEvents();
     this.bindFirebaseEvents();
 
@@ -67,6 +68,7 @@ const AdminApp = {
         document.getElementById('adminAuthGate').style.display = 'none';
         this.renderMetrics();
         this.renderProductsTable();
+        this.renderGalleryTable();
       } else {
         alert('Invalid administrative passcode. Access denied.');
       }
@@ -212,41 +214,62 @@ const AdminApp = {
         alert('Please select valid image files (JPG, PNG, WEBP).');
         return;
       }
+
+      // If current product only has the default placeholder, replace it!
+      if (this.activeImagesList.length === 1 && this.activeImagesList[0] === 'assets/category-sarees.jpg') {
+        this.activeImagesList = [];
+      }
+
       if (statusText) {
         statusText.style.display = 'block';
         statusText.style.color = 'var(--color-gold-dark)';
-        statusText.textContent = `Processing ${fileArr.length} photo(s)...`;
+        statusText.textContent = `Optimizing ${fileArr.length} photo(s)...`;
       }
+
       for (let i = 0; i < fileArr.length; i++) {
         const file = fileArr[i];
         if (statusText) statusText.textContent = `Adding photo ${i + 1} of ${fileArr.length} (${file.name})...`;
         try {
-          const productId = this.currentEditId || 'new-' + Date.now();
-          const url = await Store.uploadProductImage(file, productId, (pct) => {
-            if (statusText) statusText.textContent = `Uploading ${file.name}: ${pct}%...`;
-          });
-          if (url) {
-            this.activeImagesList.push(url);
-            this.renderImagePreviews();
+          // Step 1: Immediate local compressed data URL (< 50ms)
+          const localDataUrl = await Store.compressImageFile(file, 1000, 0.82);
+          const indexInList = this.activeImagesList.length;
+          this.activeImagesList.push(localDataUrl);
+          this.renderImagePreviews();
+
+          // Step 2: Background upload to Firebase Storage (non-blocking)
+          if (typeof FirebaseService !== 'undefined' && FirebaseService.isReady) {
+            const productId = this.currentEditId || 'new-' + Date.now();
+            Store.uploadProductImage(file, productId).then((cloudUrl) => {
+              if (cloudUrl && cloudUrl.startsWith('http')) {
+                this.activeImagesList[indexInList] = cloudUrl;
+              }
+            }).catch(() => {});
           }
         } catch (err) {
-          console.error('[Admin] Error uploading photo:', err);
+          console.warn('[Admin] Canvas compression fallback, using raw reader:', err);
+          try {
+            const raw = await Store.readFileAsDataUrl(file);
+            this.activeImagesList.push(raw);
+            this.renderImagePreviews();
+          } catch (e2) {
+            console.error('[Admin] Could not read photo:', e2);
+          }
         }
       }
+
       if (statusText) {
-        statusText.textContent = `✓ ${fileArr.length} photo(s) added successfully!`;
+        statusText.textContent = `✓ ${fileArr.length} photo(s) added!`;
         statusText.style.color = '#25a244';
         setTimeout(() => {
           statusText.style.display = 'none';
           statusText.style.color = '';
-        }, 3500);
+        }, 3000);
       }
       this.renderImagePreviews();
       if (fileInput) fileInput.value = '';
     };
 
     dropzone?.addEventListener('click', (e) => {
-      // If direct target is not the file input itself, trigger it
       if (e.target !== fileInput) {
         fileInput?.click();
       }
@@ -486,8 +509,33 @@ const AdminApp = {
         }
       });
     });
+  },
 
-    // Lookbook Modal & File Upload Manager
+  // 6. Lookbook Modal & File Upload Manager
+  openGalleryModal() {
+    const modal = document.getElementById('galleryModal');
+    const form = document.getElementById('galleryForm');
+    const previewContainer = document.getElementById('galleryPreviewContainer');
+    const status = document.getElementById('galleryUploadStatus');
+    const urlInput = document.getElementById('galleryImageUrlInput');
+    const fileInput = document.getElementById('galleryFileInput');
+
+    form?.reset();
+    this.activeGalleryImage = null;
+    if (previewContainer) previewContainer.style.display = 'none';
+    if (status) status.style.display = 'none';
+    if (urlInput) urlInput.value = '';
+    if (fileInput) fileInput.value = '';
+    modal?.classList.add('open');
+  },
+
+  closeGalleryModal() {
+    const modal = document.getElementById('galleryModal');
+    modal?.classList.remove('open');
+    this.activeGalleryImage = null;
+  },
+
+  bindGalleryEvents() {
     this.activeGalleryImage = null;
     const galleryModal = document.getElementById('galleryModal');
     const openGalleryModalBtn = document.getElementById('openGalleryModalBtn');
@@ -503,47 +551,64 @@ const AdminApp = {
     const galleryImageUrlInput = document.getElementById('galleryImageUrlInput');
     const galleryUseUrlBtn = document.getElementById('galleryUseUrlBtn');
 
-    const openGalleryModal = () => {
-      galleryForm?.reset();
-      this.activeGalleryImage = null;
-      if (galleryPreviewContainer) galleryPreviewContainer.style.display = 'none';
-      if (galleryStatus) galleryStatus.style.display = 'none';
-      galleryModal?.classList.add('open');
-    };
+    openGalleryModalBtn?.addEventListener('click', (e) => {
+      e.preventDefault();
+      this.openGalleryModal();
+    });
 
-    const closeGalleryModal = () => {
-      galleryModal?.classList.remove('open');
-      this.activeGalleryImage = null;
-    };
+    closeGalleryModalBtn?.addEventListener('click', () => this.closeGalleryModal());
+    cancelGalleryModalBtn?.addEventListener('click', () => this.closeGalleryModal());
 
-    openGalleryModalBtn?.addEventListener('click', openGalleryModal);
-    closeGalleryModalBtn?.addEventListener('click', closeGalleryModal);
-    cancelGalleryModalBtn?.addEventListener('click', closeGalleryModal);
+    // Close on clicking backdrop
+    galleryModal?.addEventListener('click', (e) => {
+      if (e.target === galleryModal) this.closeGalleryModal();
+    });
 
-    // Lookbook File Selection & Upload
+    // Lookbook File Selection & Instant Display
     const handleGalleryFile = async (file) => {
       if (!file) return;
       if (galleryStatus) {
         galleryStatus.style.display = 'block';
         galleryStatus.style.color = 'var(--color-gold-dark)';
-        galleryStatus.textContent = `Optimizing & uploading ${file.name}...`;
+        galleryStatus.textContent = `Optimizing photo (${file.name})...`;
       }
       try {
-        const url = await Store.uploadGalleryImage(file, (pct) => {
-          if (galleryStatus) galleryStatus.textContent = `Uploading photo: ${pct}%...`;
-        });
-        this.activeGalleryImage = url;
-        if (galleryPreviewImg) galleryPreviewImg.src = url;
+        // Step 1: Immediate local preview (< 50ms)
+        const localDataUrl = await Store.compressImageFile(file, 1000, 0.82);
+        this.activeGalleryImage = localDataUrl;
+        if (galleryPreviewImg) galleryPreviewImg.src = localDataUrl;
         if (galleryPreviewContainer) galleryPreviewContainer.style.display = 'block';
         if (galleryStatus) {
           galleryStatus.textContent = '✓ Photo ready for Lookbook!';
           galleryStatus.style.color = '#25a244';
         }
+
+        // Step 2: Background cloud upload (non-blocking)
+        if (typeof FirebaseService !== 'undefined' && FirebaseService.isReady) {
+          Store.uploadGalleryImage(file).then((cloudUrl) => {
+            if (cloudUrl && cloudUrl.startsWith('http')) {
+              this.activeGalleryImage = cloudUrl;
+              if (galleryPreviewImg) galleryPreviewImg.src = cloudUrl;
+            }
+          }).catch(() => {});
+        }
       } catch (err) {
-        console.error('Gallery file upload error:', err);
-        if (galleryStatus) {
-          galleryStatus.textContent = 'Upload failed. Please try another image.';
-          galleryStatus.style.color = 'var(--color-crimson)';
+        console.warn('Gallery canvas compression fallback, using raw reader:', err);
+        try {
+          const raw = await Store.readFileAsDataUrl(file);
+          this.activeGalleryImage = raw;
+          if (galleryPreviewImg) galleryPreviewImg.src = raw;
+          if (galleryPreviewContainer) galleryPreviewContainer.style.display = 'block';
+          if (galleryStatus) {
+            galleryStatus.textContent = '✓ Photo ready for Lookbook!';
+            galleryStatus.style.color = '#25a244';
+          }
+        } catch (e2) {
+          console.error('Gallery file upload error:', e2);
+          if (galleryStatus) {
+            galleryStatus.textContent = 'Upload failed. Please try another image.';
+            galleryStatus.style.color = 'var(--color-crimson)';
+          }
         }
       }
     };
@@ -555,6 +620,22 @@ const AdminApp = {
 
     galleryDropzone?.addEventListener('click', (e) => {
       if (e.target !== galleryFileInput) galleryFileInput?.click();
+    });
+
+    galleryDropzone?.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      galleryDropzone.classList.add('dragover');
+    });
+
+    galleryDropzone?.addEventListener('dragleave', () => {
+      galleryDropzone.classList.remove('dragover');
+    });
+
+    galleryDropzone?.addEventListener('drop', (e) => {
+      e.preventDefault();
+      galleryDropzone.classList.remove('dragover');
+      const file = e.dataTransfer?.files?.[0];
+      if (file) handleGalleryFile(file);
     });
 
     // Set Image URL manually
@@ -772,3 +853,4 @@ const AdminApp = {
   }
 };
 
+window.AdminApp = AdminApp;

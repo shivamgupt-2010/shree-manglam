@@ -280,15 +280,15 @@ const FirebaseService = {
       let settled = false;
       let uploadTask = null;
 
-      // 8-second safety timeout so UI never hangs
+      // 3.5-second safety timeout so UI stays fast and responsive
       const timer = setTimeout(() => {
         if (!settled) {
           settled = true;
-          console.warn('[Firebase Storage] Upload timed out after 8s — falling back.');
+          console.warn('[Firebase Storage] Upload timed out after 3.5s — falling back.');
           try { if (uploadTask) uploadTask.cancel(); } catch (e) {}
           resolve(null);
         }
-      }, 8000);
+      }, 3500);
 
       try {
         const storageRef = this._storage.ref(path);
