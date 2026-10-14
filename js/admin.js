@@ -228,23 +228,12 @@ const AdminApp = {
 
       for (let i = 0; i < fileArr.length; i++) {
         const file = fileArr[i];
-        if (statusText) statusText.textContent = `Adding photo ${i + 1} of ${fileArr.length} (${file.name})...`;
+        if (statusText) statusText.textContent = `Optimizing photo ${i + 1} of ${fileArr.length} (${file.name})...`;
         try {
-          // Step 1: Immediate local compressed data URL (< 50ms)
+          // Instant local compressed data URL (< 50ms)
           const localDataUrl = await Store.compressImageFile(file, 1000, 0.82);
-          const indexInList = this.activeImagesList.length;
           this.activeImagesList.push(localDataUrl);
           this.renderImagePreviews();
-
-          // Step 2: Background upload to Firebase Storage (non-blocking)
-          if (typeof FirebaseService !== 'undefined' && FirebaseService.isReady) {
-            const productId = this.currentEditId || 'new-' + Date.now();
-            Store.uploadProductImage(file, productId).then((cloudUrl) => {
-              if (cloudUrl && cloudUrl.startsWith('http')) {
-                this.activeImagesList[indexInList] = cloudUrl;
-              }
-            }).catch(() => {});
-          }
         } catch (err) {
           console.warn('[Admin] Canvas compression fallback, using raw reader:', err);
           try {
@@ -480,6 +469,22 @@ const AdminApp = {
     if (!tbody) return;
 
     const gallery = Store.getGallery();
+    if (!gallery || gallery.length === 0) {
+      tbody.innerHTML = `
+        <tr>
+          <td colspan="5" style="text-align: center; padding: 40px 20px; color: var(--color-text-muted);">
+            <div style="font-size: 2rem; margin-bottom: 8px;">📸</div>
+            <div style="font-weight: 600; font-size: 1rem; color: var(--color-crimson); margin-bottom: 4px;">No Lookbook items yet</div>
+            <p style="font-size: 0.85rem; margin-bottom: 16px;">Curate editorial photographs and Instagram Reels for your storefront.</p>
+            <button type="button" class="btn-admin-action btn-admin-primary" onclick="if (window.AdminApp && window.AdminApp.openGalleryModal) { window.AdminApp.openGalleryModal(); } else { document.getElementById('galleryModal').classList.add('open'); }" style="margin: 0 auto; display: inline-flex; align-items: center; gap: 8px;">
+              <span>+ Add to Lookbook</span>
+            </button>
+          </td>
+        </tr>
+      `;
+      return;
+    }
+
     tbody.innerHTML = gallery.map(item => `
       <tr>
         <td>
@@ -573,7 +578,7 @@ const AdminApp = {
         galleryStatus.textContent = `Optimizing photo (${file.name})...`;
       }
       try {
-        // Step 1: Immediate local preview (< 50ms)
+        // Immediate local preview (< 50ms)
         const localDataUrl = await Store.compressImageFile(file, 1000, 0.82);
         this.activeGalleryImage = localDataUrl;
         if (galleryPreviewImg) galleryPreviewImg.src = localDataUrl;
@@ -581,16 +586,6 @@ const AdminApp = {
         if (galleryStatus) {
           galleryStatus.textContent = '✓ Photo ready for Lookbook!';
           galleryStatus.style.color = '#25a244';
-        }
-
-        // Step 2: Background cloud upload (non-blocking)
-        if (typeof FirebaseService !== 'undefined' && FirebaseService.isReady) {
-          Store.uploadGalleryImage(file).then((cloudUrl) => {
-            if (cloudUrl && cloudUrl.startsWith('http')) {
-              this.activeGalleryImage = cloudUrl;
-              if (galleryPreviewImg) galleryPreviewImg.src = cloudUrl;
-            }
-          }).catch(() => {});
         }
       } catch (err) {
         console.warn('Gallery canvas compression fallback, using raw reader:', err);
@@ -687,7 +682,7 @@ const AdminApp = {
         type: reelUrl ? 'REEL' : 'LOOKBOOK'
       });
 
-      closeGalleryModal();
+      this.closeGalleryModal();
       this.renderMetrics();
       this.renderGalleryTable();
     });

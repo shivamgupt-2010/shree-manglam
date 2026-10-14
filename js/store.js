@@ -309,15 +309,14 @@ const Store = {
   },
 
   /**
-   * Upload a product image to Firebase Storage with automatic fallback
+   * Upload a product image with automatic optimization
    * to a permanent, high-quality compressed Base64 Data URL.
    * NEVER returns a transient blob: URL.
    */
   async uploadProductImage(file, productId, onProgress) {
-    // 1. Generate an optimized compressed data URL first
     let dataUrl = null;
     try {
-      dataUrl = await this.compressImageFile(file, 1000, 0.80);
+      dataUrl = await this.compressImageFile(file, 1000, 0.82);
     } catch (e) {
       console.warn('[Store] Canvas compression fallback:', e);
       try {
@@ -327,39 +326,15 @@ const Store = {
       }
     }
 
-    // 2. Try Firebase Storage upload if available
-    if (typeof FirebaseService !== 'undefined' && FirebaseService.isReady) {
-      try {
-        const safe = (file.name || 'photo').replace(/[^a-zA-Z0-9._-]/g, '_');
-        const path = `products/${productId || 'new'}/${Date.now()}_${safe}`;
-        const cloudUrl = await FirebaseService.uploadImage(file, path, onProgress);
-        if (cloudUrl) return cloudUrl;
-      } catch (err) {
-        console.warn('[Store] Firebase Storage upload skipped, using optimized image:', err);
-      }
-    }
-
-    // 3. Return permanent data URL (never a transient blob)
     return dataUrl || 'assets/category-sarees.jpg';
   },
 
   async uploadGalleryImage(file, onProgress) {
     let dataUrl = null;
     try {
-      dataUrl = await this.compressImageFile(file, 1000, 0.80);
+      dataUrl = await this.compressImageFile(file, 1000, 0.82);
     } catch (e) {
       try { dataUrl = await this.readFileAsDataUrl(file); } catch (e2) {}
-    }
-
-    if (typeof FirebaseService !== 'undefined' && FirebaseService.isReady) {
-      try {
-        const safe = (file.name || 'photo').replace(/[^a-zA-Z0-9._-]/g, '_');
-        const path = `gallery/${Date.now()}_${safe}`;
-        const cloudUrl = await FirebaseService.uploadImage(file, path, onProgress);
-        if (cloudUrl) return cloudUrl;
-      } catch (err) {
-        console.warn('[Store] Gallery upload to storage failed:', err);
-      }
     }
 
     return dataUrl || 'assets/hero-banner.jpg';
