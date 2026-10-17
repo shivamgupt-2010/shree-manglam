@@ -1,15 +1,14 @@
 /**
  * SHREE MANGLAM — SIGNATURE LUXURY STARTUP ANIMATION CONTROLLER
- * Indian ethnic-fashion luxury splash, paisley/floral SVG motion,
- * silk wave sheen, and seamless homepage dissolve.
+ * Ultra-High-Performance, Zero-Jank Indian Haute Couture Splash & Dismissal
  */
 
 (function () {
   'use strict';
 
   const STORAGE_KEY = 'shree_manglam_intro_played';
-  const INTRO_DURATION_MS = 2300;
-  const FALLBACK_TIMEOUT_MS = 2700;
+  const INTRO_DURATION_MS = 1900;
+  const FALLBACK_TIMEOUT_MS = 2300;
 
   const IntroAnimation = {
     overlay: null,
@@ -41,14 +40,13 @@
         return;
       }
 
-      // 4. Lock scrolling while intro plays
+      // 4. Mark intro playing class without layout-shifting overflow manipulation
       document.body.classList.add('intro-playing');
-      document.body.style.overflow = 'hidden';
 
       // 5. Bind User Interactions to dismiss early (Skip button, click anywhere, Escape key)
       this.bindControls();
 
-      // 6. Schedule normal sequence dissolve at target duration (2.2s - 2.4s)
+      // 6. Schedule normal sequence dissolve at target duration (1.9s)
       this.dismissTimer = setTimeout(() => {
         this.dismiss();
       }, INTRO_DURATION_MS);
@@ -102,12 +100,12 @@
         return;
       }
 
-      // Add smooth fade & blur dissolve class
+      // Add smooth fade dissolve class (GPU accelerated)
       this.overlay.classList.add('dismissing');
 
       setTimeout(() => {
         this.cleanup();
-      }, 480);
+      }, 420);
     },
 
     cleanup() {
@@ -116,9 +114,8 @@
         this.overlay.setAttribute('aria-hidden', 'true');
       }
       document.body.classList.remove('intro-playing');
-      document.body.style.overflow = '';
 
-      // Notify other components (Hero, catalogue, scroll reveal) that intro is complete
+      // Notify other components that intro is complete
       window.dispatchEvent(new CustomEvent('sm-intro-complete', { detail: { timestamp: Date.now() } }));
     },
 
@@ -128,7 +125,7 @@
         this.overlay.classList.add('is-hidden');
         this.overlay.setAttribute('aria-hidden', 'true');
       }
-      document.body.style.overflow = '';
+      document.body.classList.remove('intro-playing');
       window.dispatchEvent(new CustomEvent('sm-intro-complete', { detail: { skipped: true } }));
     }
   };

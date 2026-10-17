@@ -610,8 +610,8 @@ const App = {
     if (!container) return;
 
     const gallery = Store.getGallery();
-    container.innerHTML = gallery.map((item, idx) => `
-      <div class="gallery-grid-item" data-id="${item.id}" style="animation: smCardEntrance 0.55s var(--ease-luxury) backwards; animation-delay: ${idx * 0.05}s;">
+    container.innerHTML = gallery.map((item) => `
+      <div class="gallery-grid-item" data-id="${item.id}">
         <img src="${item.imageUrl}" alt="${item.title}" class="gallery-grid-img" loading="lazy" />
         <div class="gallery-grid-overlay">
           <span class="gallery-item-tag">${item.tag}</span>
@@ -715,8 +715,8 @@ const App = {
         }
       });
     }, {
-      rootMargin: '0px 0px -40px 0px',
-      threshold: 0.08
+      rootMargin: '0px 0px 80px 0px',
+      threshold: 0.02
     });
 
     targets.forEach(el => observer.observe(el));
