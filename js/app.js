@@ -28,6 +28,7 @@ const App = {
     this.bindModals();
     this.bindFloatingConcierge();
     this.handleInitialHash();
+    this.initScrollReveal();
 
     // Initialize Firebase and refresh data from Firestore
     if (typeof FirebaseService !== 'undefined') {
@@ -283,7 +284,7 @@ const App = {
       return;
     }
 
-    container.innerHTML = products.map(product => this.createProductCardHtml(product)).join('');
+    container.innerHTML = products.map((product, idx) => this.createProductCardHtml(product, idx)).join('');
 
     // Bind card action buttons
     container.querySelectorAll('.product-card').forEach(card => {
@@ -308,7 +309,7 @@ const App = {
     });
   },
 
-  createProductCardHtml(p) {
+  createProductCardHtml(p, idx = 0) {
     const formattedPrice = Store.formatRupees(p.pricePaise);
     const comparePrice = p.compareAtPricePaise ? Store.formatRupees(p.compareAtPricePaise) : null;
     const coverImage = (p.images && p.images[p.coverIndex || 0]) || 'assets/category-sarees.jpg';
@@ -338,7 +339,7 @@ const App = {
     }
 
     return `
-      <article class="product-card" data-id="${p.id}" id="card-${p.slug}">
+      <article class="product-card" data-id="${p.id}" id="card-${p.slug}" style="--card-idx: ${idx};">
         <div class="product-card-media product-media-click">
           ${badgeHtml}
           ${festiveBadgeHtml}
@@ -442,7 +443,17 @@ const App = {
         pill.classList.remove('active');
       }
     });
-    this.renderCatalogue();
+
+    const container = document.getElementById('productGridContainer');
+    if (container) {
+      container.classList.add('grid-transitioning');
+      setTimeout(() => {
+        this.renderCatalogue();
+        container.classList.remove('grid-transitioning');
+      }, 120);
+    } else {
+      this.renderCatalogue();
+    }
   },
 
   resetFilters() {
@@ -571,9 +582,14 @@ const App = {
 
   updateModalMainImage(url) {
     const mainImg = document.getElementById('modalMainGalleryImg');
-    if (mainImg) {
+    if (!mainImg) return;
+    if (mainImg.src === url) return;
+
+    mainImg.classList.add('crossfade-out');
+    setTimeout(() => {
       mainImg.src = url;
-    }
+      mainImg.classList.remove('crossfade-out');
+    }, 140);
   },
 
   closeProductModal() {
@@ -594,8 +610,8 @@ const App = {
     if (!container) return;
 
     const gallery = Store.getGallery();
-    container.innerHTML = gallery.map(item => `
-      <div class="gallery-grid-item" data-id="${item.id}">
+    container.innerHTML = gallery.map((item, idx) => `
+      <div class="gallery-grid-item" data-id="${item.id}" style="animation: smCardEntrance 0.55s var(--ease-luxury) backwards; animation-delay: ${idx * 0.05}s;">
         <img src="${item.imageUrl}" alt="${item.title}" class="gallery-grid-img" loading="lazy" />
         <div class="gallery-grid-overlay">
           <span class="gallery-item-tag">${item.tag}</span>
@@ -679,5 +695,30 @@ const App = {
         setTimeout(() => this.openProductModal(product), 300);
       }
     }
+  },
+
+  // 9. High-performance Scroll Reveal Observer
+  initScrollReveal() {
+    const targets = document.querySelectorAll('.reveal-on-scroll, .royal-divider');
+    if (!targets || targets.length === 0) return;
+
+    if (!('IntersectionObserver' in window)) {
+      targets.forEach(el => el.classList.add('is-revealed'));
+      return;
+    }
+
+    const observer = new IntersectionObserver((entries, obs) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-revealed');
+          obs.unobserve(entry.target);
+        }
+      });
+    }, {
+      rootMargin: '0px 0px -40px 0px',
+      threshold: 0.08
+    });
+
+    targets.forEach(el => observer.observe(el));
   }
 };
