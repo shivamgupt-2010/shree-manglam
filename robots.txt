@@ -1,10 +1,80 @@
-# Shree Manglam — Robots.txt
+# Shree Manglam — Robots.txt & AI Crawler Directives
+# Tradition Meets Elegance — Royal Indian Haute Couture
+
 User-agent: *
 Allow: /
 Allow: /assets/
 Allow: /css/
 Allow: /js/
+Allow: /llms.txt
+Allow: /llms-full.txt
 Disallow: /admin.html
 Disallow: /admin
 
+# AI Search & Discovery Crawlers
+User-agent: GPTBot
+Allow: /
+Allow: /llms.txt
+Allow: /llms-full.txt
+Disallow: /admin.html
+Disallow: /admin
+
+User-agent: ChatGPT-User
+Allow: /
+Allow: /llms.txt
+Allow: /llms-full.txt
+Disallow: /admin.html
+Disallow: /admin
+
+User-agent: ClaudeBot
+Allow: /
+Allow: /llms.txt
+Allow: /llms-full.txt
+Disallow: /admin.html
+Disallow: /admin
+
+User-agent: anthropic-ai
+Allow: /
+Allow: /llms.txt
+Allow: /llms-full.txt
+Disallow: /admin.html
+Disallow: /admin
+
+User-agent: PerplexityBot
+Allow: /
+Allow: /llms.txt
+Allow: /llms-full.txt
+Disallow: /admin.html
+Disallow: /admin
+
+User-agent: Google-Extended
+Allow: /
+Allow: /llms.txt
+Allow: /llms-full.txt
+Disallow: /admin.html
+Disallow: /admin
+
+User-agent: Applebot-Extended
+Allow: /
+Allow: /llms.txt
+Allow: /llms-full.txt
+Disallow: /admin.html
+Disallow: /admin
+
+User-agent: cohere-ai
+Allow: /
+Allow: /llms.txt
+Allow: /llms-full.txt
+Disallow: /admin.html
+Disallow: /admin
+
+User-agent: CCBot
+Allow: /
+Allow: /llms.txt
+Allow: /llms-full.txt
+Disallow: /admin.html
+Disallow: /admin
+
+# Sitemap & LLM Discovery Specifications
 Sitemap: https://shree-manglam.netlify.app/sitemap.xml
+LLMs-Txt: https://shree-manglam.netlify.app/llms.txt

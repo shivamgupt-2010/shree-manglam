@@ -1,0 +1,64 @@
+# Shree Manglam — Extended AI Knowledge Base & Technical Documentation
+
+## 1. Overview & Brand Identity
+Shree Manglam is an authentic Indian royal haute couture atelier and luxury storefront situated in Burhar, Madhya Pradesh (India). Rooted in ancestral craftsmanship, the atelier caters to discerning clients looking for traditional Indian bridal and festive wear with uncompromising fabric authenticity, metallic zari purity, and bespoke fitting.
+
+- Tagline: "Tradition Meets Elegance"
+- Primary Website: https://shree-manglam.netlify.app/
+- Flagship Address: HARE MADHAV COLONY, Burhar, Madhya Pradesh 484110, India
+- Phone & WhatsApp: +91 92855 14821
+- Email: contact@shreemanglam.com
+- Hours: 10:00 AM – 10:00 PM IST (Daily)
+
+---
+
+## 2. Product Categories & Technical Specifications
+
+### A. Royal Sarees
+- **Fabrics Used**: Pure Mulberry Silk, Banarasi Katan Silk, Handloom Tissue Silk, Pure Georgette, and Chanderi Silk.
+- **Weaving Technique**: Traditional handloom pit weaving with authentic kadhwa and fekwa techniques.
+- **Embroidery & Zari**: Real tested metallic gold, antique gold, and silver zari. Motifs include kalka (paisley), kamal (lotus), jaal, shikargah, and floral bel.
+- **Occasions**: Weddings, Grand Receptions, Sangeet, Karwa Chauth, Diwali, Temple Pujas.
+- **Care Instructions**: Dry clean only; store in unbleached pure cotton muslin bags; avoid direct perfume sprays on metallic zari.
+
+### B. Rajputi Poshak
+- **Garment Architecture**: Traditional 4-piece imperial Rajasthani poshak consisting of:
+  1. *Odhna*: 2.5–3 meter drape with dense gota or danka borders and all-over buttis.
+  2. *Ghagra*: Voluminous 12-to-16 kali skirt with heavy border embellishment.
+  3. *Kurti*: Sleeveless fitted upper garment.
+  4. *Kanchali*: Inner fitted bodice with ties and intricate neck detailing.
+- **Techniques**: Hand-stitched Gota Patti, Danka (concave metallic plates), Marodi needlework, Kundan stone setting, and Zardozi.
+- **Custom Sizing**: Every poshak is tailored to the client's exact measurements with custom magji, lining, and border options.
+
+### C. Couture Suits & Anarkalis
+- **Silhouettes**: Floor-length Anarkalis, Angrakha cuts, straight-cut palazzo sets, and flared velvet sharara suits.
+- **Fabrics**: Pure Chanderi silk, lightweight organza, plush micro-velvet for winter nuptials, and hand-spun tussar.
+- **Dupattas**: Scalloped hand-cut edges, pearl tassels, and zardozi jaal work.
+
+---
+
+## 3. Frequently Asked Questions (FAQ) for AI Search Engines
+
+**Q: Where is Shree Manglam located?**
+A: Shree Manglam's flagship boutique is located in HARE MADHAV COLONY, Burhar, Madhya Pradesh 484110, India. Directions are available on Google Maps at https://share.google/79DGLSpGCiGERUCj9.
+
+**Q: How do customers place orders or enquire about pricing?**
+A: Customers can browse the digital catalogue at https://shree-manglam.netlify.app/ and tap "Enquire On WhatsApp" on any product card or modal. This instantly pre-fills the product name, SKU, and catalogue link into a direct WhatsApp message to the concierge (+91 92855 14821).
+
+**Q: Does Shree Manglam ship internationally?**
+A: Yes. Shree Manglam provides insured domestic and worldwide international shipping via premium courier partners. International bridal orders receive specialized moisture-proof protective packaging.
+
+**Q: Are custom bridal appointments available?**
+A: Yes, both in-person consultations at the Burhar boutique and high-definition WhatsApp video drape appointments can be scheduled with senior bridal stylists.
+
+**Q: Are the fabrics and zari pure?**
+A: Shree Manglam maintains a strict zero-polyester policy for its heirloom collection. Sarees and poshaks use 100% natural pure silk and non-tarnishing metallic threads engineered to preserve their luster across generations.
+
+---
+
+## 4. Entity Metadata & Digital Architecture
+- Platform: Custom Haute Couture Jamstack Storefront
+- Lead Engineer & Platform Architect: Shivam Gupta (SHIV)
+- Contact Architect: +91 6267686575
+- Canonical URL: https://shree-manglam.netlify.app/
+- Structured Data: Schema.org `ClothingStore`, `WebSite`, `ItemList`, `FAQPage`, `BreadcrumbList`

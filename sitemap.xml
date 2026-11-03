@@ -1,9 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://shree-manglam.netlify.app/</loc>
-    <lastmod>2026-10-11</lastmod>
+    <lastmod>2026-11-03</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://shree-manglam.netlify.app/assets/og-image.jpg</image:loc>
+      <image:title>Shree Manglam Royal Indian Haute Couture</image:title>
+      <image:caption>Authentic Banarasi Sarees, Rajputi Poshak and Bespoke Couture Suits</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://shree-manglam.netlify.app/assets/logo.jpg</image:loc>
+      <image:title>Shree Manglam Official Royal Emblem</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://shree-manglam.netlify.app/assets/category-sarees.jpg</image:loc>
+      <image:title>Royal Banarasi Sarees Collection</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://shree-manglam.netlify.app/assets/category-poshak.jpg</image:loc>
+      <image:title>Rajputi Poshak Collection</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://shree-manglam.netlify.app/assets/category-suits.jpg</image:loc>
+      <image:title>Couture Suits &amp; Anarkalis Collection</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://shree-manglam.netlify.app/llms.txt</loc>
+    <lastmod>2026-11-03</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
   </url>
 </urlset>

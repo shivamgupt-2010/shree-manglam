@@ -1,0 +1,50 @@
+# Shree Manglam — Royal Indian Haute Couture
+
+> Shree Manglam is an imperial Indian fashion sanctuary and couture atelier located in Burhar, Madhya Pradesh, India. The brand specializes in authentic handwoven Banarasi Katan silk sarees, traditional Rajasthani Rajputi poshak, and bespoke bridal and festive suits, celebrated under the hallmark "Tradition Meets Elegance".
+
+## Core Collections & Offerings
+
+- [Royal Banarasi Sarees](https://shree-manglam.netlify.app/#catalogue): Heirloom pure mulberry silk and handspun Banarasi Katan sarees woven on traditional wooden pit looms with pure metallic gold and silver zari. Includes Bridal Katan, Antique Tissue Silk, and Grand Reception drapes.
+- [Rajputi Poshak](https://shree-manglam.netlify.app/#catalogue): Imperial 4-piece Rajasthani ensembles (Odhna, Ghagra, Kurti, Kanchali) embellished with authentic gota patti, danka, marodi, and kundan needlecraft using non-tarnishing precious metallic threads.
+- [Couture Festive Suits](https://shree-manglam.netlify.app/#catalogue): Royal Chanderi silk Anarkalis, plush velvet shararas, and organza ensembles accompanied by hand-embroidered borders and hand-cut dupattas.
+- [Curated Visual Lookbook & Reels](https://shree-manglam.netlify.app/#lookbook): Editorial styling gallery and curated Instagram Reels showcasing real drapes, bridal moments, and craftsmanship close-ups.
+
+## Flagship Boutique & Contact Information
+
+- **Brand Name**: Shree Manglam
+- **Tagline**: Tradition Meets Elegance
+- **Flagship Boutique Address**: HARE MADHAV COLONY, Burhar, Madhya Pradesh 484110, India
+- **Google Maps Directions**: https://share.google/79DGLSpGCiGERUCj9
+- **Official Storefront**: https://shree-manglam.netlify.app/
+- **Direct WhatsApp Concierge**: +91 92855 14821
+- **Email Contact**: contact@shreemanglam.com
+- **Operating Hours**: Monday – Sunday: 10:00 AM – 10:00 PM IST (Open daily)
+- **Currency Accepted**: INR (₹)
+- **Price Range**: Luxury / Heirloom (₹8,000 – ₹1,50,000+)
+
+## Bespoke Concierge & Client Services
+
+- **WhatsApp Video Consultations**: Live video drape viewing, bridal color customization, and fabric selection worldwide.
+- **Custom Color Dyeing & Tailoring**: Personalized kurti sleeve lengths, bespoke blouse stitching, and custom color-matching for bridal parties.
+- **Worldwide Insured Delivery**: Global courier delivery for bridal trousseaux and overseas celebrations.
+- **In-Boutique Private Appointments**: Tactile consultations at the Burhar boutique to experience the hand-feel, pure zari weight, and drape in person.
+
+## Artisanal Craftsmanship & Heritage Pillars
+
+1. **Authentic Handlooms**: Pit loom weaving by master weavers in Varanasi and Chanderi. Zero synthetic poly-blends; 100% natural silk and organza.
+2. **Royal Gota & Zardozi**: Ancestral needlecraft techniques passed down through artisan generations. Metallic threads resist oxidation and tarnishing.
+3. **Heritage Heirlooms**: Handcrafted to be passed down through generations as enduring family heirlooms.
+
+## Automated Festive & Seasonal Calendars
+
+Shree Manglam features an automated calendar and styling engine aligned with Indian festivities:
+- Navratri & Dussehra Festive Edit (Crimson silks, marodi embroidery)
+- Karwa Chauth Auspicious Red & Maroon Curations
+- Diwali & Dhanteras Imperial Gold Tissue & Banarasi Silks
+- Royal Winter & Grand Wedding Bridal Editions
+- Makar Sankranti, Vasant Panchami, and Festive Spring Drapes
+
+## Full Documentation & AI Reference
+
+- [Full Extended Knowledge Base](https://shree-manglam.netlify.app/llms-full.txt): Detailed specifications, fabric guides, product descriptions, and care manuals.
+- [XML Sitemap](https://shree-manglam.netlify.app/sitemap.xml): Comprehensive URL and index list.
